@@ -1,0 +1,80 @@
+========================================== Paralelismo a nivel de Hilo ==========================================
+-Multiple program counters
+-Uses MIMD model
+-Targeted for tightly-coupled shared-memory multiprocessors
+-Fine grained: 
+-Coarse grained:
+-Symmetric Multiprocessors (SMPs): 
+    -Small number of cores
+    -Share single memory with uiform memory latency
+-Distributed Shared Memory (DSM):
+    -Memory distributed across multiple processorsç
+    -Non Uniform memory access/latency: NUMA
+-Cache coherence: 
+      -Provides:
+        -Migration
+        -Replication
+      -Protocols:
+        -Directory based:
+            -Comm to the processor using the modified data
+            -Sharing status of cache blocks in one location
+
+        -Snoopy:
+            -Broadcast to all other processors
+            -Invalidation: On write invalidate all other copies
+            -Update: On write update all other copies
+-Syncronization: 
+    -Atomic exchange : Change the contents of a register to another
+    -Test and set : Test the contents of a register and set it to 1
+    -Fetch and add : Reads original value  from memory and increments it in memory
+    RISC-V: load/reserve and store/conditional
+-Fallacies:
+    -Amdahl's law does not apply to parallelism on processors 
+    -Linear speedups are needed to make multiprocessors cost effective
+
+-Pitfalls: 
+    -Measuring performance of multiprocessors by linear speedup versus
+     execution time
+    -Not developing the software to take advantage of, or optimize for, a
+     multiprocessor architecture
+
+===================================Ejercicio 1 ====================================
+Analizar efecto topografico en el CPI en una maquina de 64 processadores y memoria distribuida 
+CPI Base es de 0.75 y el 0.2% de operaciones requieren comunicación remota
+Coste comunicación remota 100 + 10 h para h para h siendo el numero de saltos que una referencia remota tiene que hacer
+Distancia maxima anilla: P/2
+Distancia maxima malla (2* sqrt(P-1))
+Distancia maxima Hipercubo: log2(P)
+
+a) Calcular el peor escenario del coste de comunicaciones cuando los 64 procesadores se organuzan como:
+    -Anilla
+    -Malla de 8x8
+    -Hipercubo
+Distancia maxima anilla = 64/2 = 32 saltos
+Distancia maxima malla = 2* sqrt(64-1) = 2* sqrt(63) = 14 saltos
+Distancia maxima Hipercubo = log2(64) = 6 saltos
+Coste comunicaciones maximo anilla = 100 + 10*32 = 420 ns
+Coste comunicaciones maximo malla = 100 + 10*14 = 240 ns
+Coste comunicaciones maximo Hipercubo = 100 + 10*6 = 160 ns
+
+b) Calcular el CPI resultante de cada topología
+    -Anilla
+    CPI = 0.75 + 0.002*420 = 1.59
+    -Malla de 8x8
+    CPI = 0.75 + 0.002*240 = 1.23
+    -Hipercubo
+    CPI = 0.75 + 0.002*160 = 1.07
+
+
+
+
+
+88                              88  
+""              ,d              88  
+                88              88  
+88 8b,dPPYba, MM88MMM ,adPPYba, 88  
+88 88P'   `"8a  88   a8P_____88 88  
+88 88       88  88   8PP""""""" 88  
+88 88       88  88,  "8b,   ,aa 88  
+88 88       88  "Y888 `"Ybbd8"' 88  
+                1                2.83

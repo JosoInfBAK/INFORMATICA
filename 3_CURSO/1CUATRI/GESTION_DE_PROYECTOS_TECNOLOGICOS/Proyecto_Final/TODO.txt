@@ -1,0 +1,8 @@
+Logo -> Done
+Acta de proyecto -> Done
+WBS -> Done
+RACI -> Done
+Organigrama -> Done 
+GANTT -> Done
+Memoria -> Done
+Trello -> Done -> Faltan los puntos raros esos

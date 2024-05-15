@@ -1,0 +1,45 @@
+==================================================================Memoria==================================================================
+-Concepto de tracducción de memoria:
+    - Como convertimos una dirección de memoria virtual en una física.
+    - La traducción de memoria es un proceso que se realiza en el hardware.
+    - El procesador no sabe nada de la memoria física.
+    - El procesador solo conoce la memoria virtual.
+    -Objetivos:
+        - Protección de memoria
+        - Compartir memoria
+        - Eficiencia
+        - Portabilidad
+        - Distribución de las direccones
+-Traducción de memoria Flexible     
+    -Base and bound.
+    -Segmentation.
+    -Paginación.
+    -Traducción multinivel
+
+- TLB: Software Loaded translation 
+
+- Base and bound
+    -Se le asigna a cada proceso un rango de direcciones.
+    -No se puede modificar el rango de direcciones una vez iniciado.
+    -E.g. 0000-0040 -> Bound = 40
+    -Para acceder a una dirección de memoria se debe sumar la base al offset, si el resultado no se encuentra en el abanico de direcciones del proceso es un miss.
+    -Si el resultado se encuentra en el abanico de direcciones del proceso es un hit.
+    -Si el proceso supera el tamaño del rango de direcciones se tiene que añadir un nuevo base and bound, si hay tamaño sobrante este queda desperdiciado.
+    -Pros:
+        -Fácil de implementar.
+        -Rápido.
+        -Seguro a nivel de escalabilidad.
+    -Cons:
+        -No se puede ampliar la memoria de manera dinámica.
+        -No se puede compartir memoria.
+
+- Segmentation
+    -Un segmento es una región contigüa de memoria virtual.
+    -Se le asigna a cada proceso un conjunto de segmentos(tabla de segmentos)
+    -El segmento puede encontrarse en cualquier zona de la memoria física.
+    -Los procesos pueden compartir segmentos.
+
+-Tabla de segmentos: Contiene el índice, el base y el bound y el access, que es donde se indican los permisos. También contiene un puntero a la memoria física.
+
+
+        

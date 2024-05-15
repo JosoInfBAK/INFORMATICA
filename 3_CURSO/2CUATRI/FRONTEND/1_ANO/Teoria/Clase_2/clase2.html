@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script lang="javascript">
+        function changeText() {
+            var state = document.getElementById("texto").innerText;
+            var text = document.getElementById("texto");
+            if (state == "Texto inicial") {
+                document.getElementById("texto").innerText = "Texto cambiado";
+                text.innerText = "Texto cambiado";
+                text.style.color = "red";
+                text.style.position = "absolute";
+                text.style.left = "50%";
+            } else {
+                document.getElementById("texto").innerText = "Texto inicial";
+                text.innerText = "Texto inicial";
+                text.style.color = "black";
+                text.style.position = "absolute";
+                text.style.left = "0%";
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="clase2.css" />
+    <title>Clase 2</title>
+</head>
+
+<body>
+    <div id="texto">Texto inicial</div>
+    <button class="clickme" onclick="changeText()">Click me</button>
+</body>
+
+</html>

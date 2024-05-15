@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+<script lang="javascript">
+    function caerPelotita() {
+        var pelotita = document.getElementById("pelotita");
+        const maxHeight = window.innerHeight;
+        setTimeout(subirPelotita,1000);
+        var anim = pelotita.animate([
+            { top: "0px" },
+            { top: "100%" }
+        ], {
+            duration: 1000,
+        })
+      
+    }
+    function subirPelotita(){
+        var anim = pelotita.animate([
+            { top: "100%" },
+            { top: "0%" }
+        ], {
+            duration: 1000,
+        })
+        setTimeout(caerPelotita,1000);
+
+    }
+
+</script>
+<link rel="stylesheet" href="clase2.css" />
+<title>Ej 2</title>
+
+<body>
+    <div class="dot" id="pelotita" onclick="caerPelotita()"></div>
+</body>
+
+</html>

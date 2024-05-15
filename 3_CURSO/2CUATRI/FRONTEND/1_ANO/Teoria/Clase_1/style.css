@@ -1,0 +1,35 @@
+body {
+  font-size: 16px;
+  background-color: paleturquoise;
+}
+
+.center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  line-height: 50px;
+  text-align: center;
+  padding: 2px;
+  width: 204px;
+  height: 54px;
+  border: 2px solid;
+}
+button#movable:active {
+  background-color: wheat;
+  top: 500px;
+  left: 500px;
+}
+
+button#Nonmovable {
+  top: 100px;
+}
+
+button:hover {
+  background-color: rgb(114, 91, 241);
+  padding: 5px;
+  font-weight: bold;
+}
+button {
+  position: absolute;
+}

@@ -1,0 +1,30 @@
+FishBone: Diagrama en el que se colocan los objetos/eventos que pueden ocasionar contratiempos con subramas que especifican ese posible fallo y al final, representando la cabeza, la consecuencia final o contratiempo.
+Tecnica Del Valor Ganado:  
+                        -PV: Valor Planeado -> Coste presupuestado (previsto o estimado) del trabajo planeado hasta la fecha (Lo que se tendría que haber hecho hasta la estimación) Lo que deberíamos llevar gastado segun lo planeado
+                        -EV: Valor Ganado -> Coste presupuestado del trabajo realizado hasta la fecha (Lo que se ha hecho hasta la estimación)  Lo que deberiamos llevar gastado para lo hecho
+                        -AC: Coste Real -> Coste invertido  del trabajo realizado hasta la fecha (Lo que se ha hecho hasta la estimación) Lo que llevamos gastado para lo hecho
+                        -CV: Variación de Coste -> EV - AC (Lo que se se tendría que haber hecho hasta la estimación - Lo que se ha hecho hasta la estimación)
+                        -SV: Variación de Tiempo -> EV - PV (Lo que se tendría que haber gastado para lo hecho - Lo que se se tendría que haber hecho hasta la estimación)
+                        -CPI: -> EV / AC (Indica si el proyecto se está ejecutando por debajo o por encima del presupuesto) Si CPI > 1 -> Proyecto por encima del presupuesto Si CPI < 1 -> Proyecto por debajo del presupuesto
+                        -SPI: -> EV / PV (Indica si el proyecto se está ejecutando por debajo o por encima del tiempo) Si SPI > 1 -> Cumpliendo tiempos Si SPI < 1 -> No se está cumpliendo el tiempo
+                        -BAC -> Presupuesto total del proyecto
+                        -EAC -> Coste estimado del proyecto (Coste total del proyecto) 
+                        -ETC -> Tiempo estimado del proyecto (Tiempo total del proyecto) EAC-AC 
+                        -VAC -> Coste del proyecto restante (Coste total del proyecto - Coste invertido hasta la fecha) BAC-EAC
+-Planificación -> Diseño
+-Iniciación -> Inciación
+-Ejecución -> Desarrollo
+-Control -> Pruebas y Control de calidad
+-Cierre -> Despliegue
+
+10 Errores en la gestión de proyectos agil:
+    - 1.- Tratar de convertir todo en un sprint
+    - 2.- Centrarse mas en las herramientas que en el proceso
+    - 3.- Falta de flexibilidad y demasiada confianza en el proceso ágil
+    - 4.- Problema en la contratación y falta de flexibilidad en los contratos
+    - 5.- Falta de apyo y planificación por parte de la dirección
+    - 6.- Demasiadas historias de usuario
+    - 7.- Demasiadas pruebas
+    - 8.- Problemas de seguridad en etapas intermedias
+    - 9.- Barreras entre equipos por falta de comunicación
+    - 10.- No saber cuando se ha terminado

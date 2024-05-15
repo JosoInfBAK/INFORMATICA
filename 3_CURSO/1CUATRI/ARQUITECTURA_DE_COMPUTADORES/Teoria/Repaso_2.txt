@@ -1,0 +1,535 @@
+-------------------Ejercicio 1 --------------------------------------
+Suponer un predictor correlado (2, 2) que traza dos saltos.
+a. Construir la tabla de predicción suponiendo que las predicciones son
+todas T. Dibujar la máquina de estados.
+b. Considerando la siguiente secuencia de saltos, razonar cada predicción
+realizada, la entrada usada para cada predicción, las modificaciones a la
+tabla y la tasa final de predicciones correctas e incorrectas.
+Secuencia de saltos (suponer que hasta este momento todos han sido tomados):
+------------------Tabla de predicción:---------------------------------------
+Entrada     Salto      Ultimo salto        Predicción
+0           0          T T                   T
+1           0          T NT                  T->T1 (S1)->T (S7)
+2           0          NT T                  T->T1 (S6)
+3           0          NT NT                 T
+4           1          T T                   T->T1 (S0)
+5           1          T NT                  T
+6           1          NT T                  T->T1 (S4)->T (S8)
+7           1          NT NT                 T->T1 (S2)
+
+
+Salto    (dirección) Resultado
+0        759          NT
+1        360          NT
+2        759          NT
+3        360          T
+4        759          NT
+5        759          T
+6        360          NT
+7        360          T
+8        759          T
+9        360          T
+
+759 mod 2 = 1
+360 mod 2 = 0
+
+Últimos saltos tomados: T T NT NT NT T NT T NT T T T
+Fallos: 1(S0)+ 1(S1)+ 1(S2)+ 1(S4)+ 1(S6) = 5
+Aciertos: 1(S3)+ 1(S5)+ 1(S7)+ 1(S8) + 1(S9) = 5
+Tasa de aciertos: 5/10 = 0.5
+Tasa de errores: 5/10 = 0.5
+Salto 0:Entrada 4: Predicción T, Resultado NT -> Predicción incorrecta -> Modificar tabla de predicción Entrada 4 a T1
+Salto 1: Entrada 1: Predicción T, Resultado NT -> Predicción incorrecta -> Modificar tabla de predicción Entrada 1 a T1
+Salto 2: Entrada 7: Predicción T, Resultado NT -> Predicción incorrecta -> Modificar tabla de predicción Entrada 7 a T1
+Salto 3: Entrada 3: Predicción T, Resultado T -> Predicción correcta
+Salto 4: Entrada 6: Predicción T, Resultado NT -> Predicción incorrecta -> Modificar tabla de predicción Entrada 6 a T1
+Salto 5: Entrada 5: Predicción T, Resultado T -> Predicción correcta
+Salto 6: Entrada 2: Predicción T, Resultado NT -> Predicción incorrecta -> Modificar tabla de predicción Entrada 2 a T1
+Salto 7: Entrada 1: Predicción T1, Resultado T -> Predicción correcta -> Modificar tabla de predicción Entrada 1 a T
+Salto 8: Entrada 6: Predicción T1, Resultado T -> Predicción correcta -> Modificar tabla de predicción Entrada 6 a T
+Salto 9: Entrada 0: Predicción T, Resultado T -> Predicción correcta
+
+
+
+
+-------------------Ejercicio 2 --------------------------------------
+Ejercicio 2
+Considerar el siguiente código,
+for (i = 0; i < 64; i++) {
+ j[i] = ((a[i] + b[i]) – (c[i] + d[i])) * e[i];
+ k[i] = ((f[i] - g[i]) + (h[i] + d[i])) / e[i + 1];
+}
+Asumir que el MVL de la arquitectura es 64, que hay una unidad de
+carga/almacenamiento con un tiempo de llenado de 10 ciclos, una unidad de
+multiplicación con un tiempo de llenado de 5 ciclos, una unidad de división con
+un tiempo de llenado de 8 ciclos, una unidad de suma con un tiempo de llenado
+de 6 ciclos y una unidad de resta con un tiempo de llenado de 3 ciclos.
+Asumir que a, b, c, d, e, f, g, h, j y k se representan mediante valores en punto
+flotante de precisión sencilla
+a. Razonar cuál es la intensidad aritmética de este código.
+b. Convertir el código en ensamblador RV64V usando strip mining.
+c. Asumiendo que hay encadenamiento, ¿cuántos chimes se requieren para
+ejecutar el código? (considerar una única unidad de acceso a memoria).
+d. ¿Cuántos ciclos de reloj requiere este código?
+e. Repetir el apartado anterior considerando ahora que hay cuatro unidades
+de acceso a memoria y dos unidades de suma.
+
+a) 
+FLOPS = 8
+Loads = 9
+Stores = 2
+Loads+Stores = 11
+Bytes leidos = 10 * 4 = 44
+Intensidad aritmética = 8 / 44 = 0.18
+b) loop:vld a
+        vld b
+        vadd a, b
+        vld c
+        vld d
+        vadd c, d
+        vsub (a+b), (c+d))
+        vld e
+        vmul (a+b-c-d), e
+        vst j
+        vld f
+        vld g
+        vsub f, g
+        vld h
+        vadd h, d
+        vadd (f-g), (h+d)
+        vld e+1
+        vdiv (f-g+h+d), e+1
+        vst k
+c)
+Convoy 1: vld -> 10 ciclos
+Convoy 2: vld, vadd -> 10 + 6 = 16 ciclos
+Convoy 3: vld, vadd -> 10 + 6 = 16 ciclos
+Convoy 4: vld, vadd,vsub -> 10 + 6 + 3 = 19 ciclos
+Convoy 5: vld,vmul -> 10 + 5 = 15 ciclos
+Convoy 6: vst -> 10 ciclos
+Convoy 7: vld -> 10 ciclos
+Convoy 8: vld, vsub -> 10 + 3 = 13 ciclos
+Convoy 9: vld, vadd -> 10 + 6 = 16 ciclos
+Convoy 10: vadd,vld,vdiv -> 6 + 10 + 8 = 24 ciclos
+Convoy 11: vst -> 10 ciclos
+Total = 10 + 16 + 16 + 19 + 15 + 10 + 10 + 13 + 16 + 24 + 10 = 153 ciclos
+
+d)
+T llenado = 153
+T ejecucion = Chimes * 64 + T llenado
+T ejecucion = 153 + 64 * 11 = 153 + 704 = 857 ciclos
+
+e) 4 unidades de acceso a memoria y º unidades de suma
+Convoy 1: vld,vld,vadd,vld,vld,vadd,vsub -> 10 + 10 + 6 + 10 + 10 + 6 + 3 = 55 ciclos
+Convoy 2: vld,vmul,vst,vld,vld,vsub -> 10 + 5 + 10 + 10 + 10 + 3 = 58 ciclos
+Convoy 3: vld,vadd,vadd,vld,vdiv,vst -> 10 + 6 + 10 + 6 + 6 + 10 + 8 + 10 = 66 ciclos
+
+
+
+
+
+
+
+-------------------Ejercicio 3 --------------------------------------
+Desarrollar el modelo roofline de los siguientes casos:
+a. Procesador con rendimiento pico de 20 GFLOP/s con ancho de banda de
+memoria de 5 GB/s.
+b. Procesador con rendimiento pico de 20 GFLOP/s con ancho de banda de
+memoria de 30 GB/s.
+c. Procesador con rendimiento pico de 15 GFLOP/s con ancho de banda de
+memoria de 15 GB/s.
+Para cada uno de los casos anteriores, explicar qué limita el rendimiento
+considerando las siguientes intensidades aritméticas: 0.5, 1, 3 y 10
+a) Intensidad aritmética = 20 GFLOP/s / 5 GB/s = 4
+  Para intensidad aritmética de 0.5 -> Ancho de banda de memoria limita
+  Para intensidad aritmética de 1 -> Ancho de banda de memoria limita
+  Para intensidad aritmética de 3 ->   Ancho de banda de memoria limita
+  Para intensidad aritmética de 10 -> Rendimiento pico limita
+
+
+   |
+   |
+20 |-------------------------------|
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+ 5 |------------|                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |____________|__________________|___________________________________________________
+    |           1                  4
+
+b) Intensidad aritmética = 20 GFLOP/s / 30 GB/s = 0.67
+    Para intensidad aritmética de 0.5 -> Ancho de banda de memoria limita
+    Para intensidad aritmética de 1 -> Rendimiento pico limita
+    Para intensidad aritmética de 3 -> Rendimiento pico limita
+    Para intensidad aritmética de 10 -> Rendimiento pico limita
+
+   |
+   |
+30 |-------------------------------|
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+ 20|------------|                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |____________|__________________|___________________________________________________
+    |           0.67               1
+
+
+
+
+
+
+
+c) Intensidad aritmética = 15 GFLOP/s / 15 GB/s = 1
+    Para intensidad aritmética de 0.5 -> Ancho de banda de memoria limita
+    Para intensidad aritmética de 1 -> Ancho de banda de memoria limita
+    Para intensidad aritmética de 3 -> Ambos limitan
+    Para intensidad aritmética de 10 -> Rendimiento pico limita
+
+   |
+   |
+15 |-------------------------------|
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |_______________________________|___________________________________________________
+    |                              1
+
+-------------------Ejercicio 4 --------------------------------------
+Considerar una hipotética GPU con las siguientes características:
+● 2 GHz de frecuencia de reloj
+● Contiene 20 procesadores SIMD, cada uno con 16 unidades en punto
+flotante de precisión sencilla.
+● 150 GB/s de ancho de banda a la memoria off-chip.
+Sin considerar el ancho de banda de memoria, ¿cuál es el throughput pico (en
+GFLOP/s) para operaciones en punto flotante de precisión sencilla? ¿Es este
+throughput sostenible dada la limitación del ancho de banda de memoria?
+
+Rta: 20 procesadores * 16 unidades cada uno * 2 GHz = 640 GFLOP/s
+Cada flop requiere 2 operandos y 1 resultado, 2 loads y un stores ->12 B por FLOPS
+640 GFLOP/s * 12 B/flop = 7680 GB/s -> 7,68 TB/s
+7680 GB/s > 150 GB/s -> No es sostenible
+
+
+
+-------------------Ejercicio 5 --------------------------------------
+Suponer que se implementa el algoritmo de Tomasulo en una máquina basada
+en MIPS, la cual ejecuta el siguiente código:
+
+Loop: fld F2, 0(x1)
+ fld F4, 0(x2)
+fmul F6, F2, F4
+fsub F10, F4, F12
+fdiv F8, F6, F10
+fadd F2, F10, F6
+fsub F16, F8, F12
+fsd F16, 0(x1)
+bnez F16, Loop
+
+Considerar que hay un sumador/restador en punto flotante (con una latencia de
+ejecución de 10 ciclos y 2 estaciones de reserva), un multiplicador en punto
+flotante (con una latencia de ejecución de 20 ciclos y 2 estaciones de reserva) y
+un divisor en punto flotante (con una latencia de ejecución de 30 ciclos y 2
+estaciones de reserva). Asimismo, considerar que hay 2 estaciones de reserva
+de carga y otras 2 de almacenamiento, siendo la latencia de ejecución de carga
+de 5 ciclos (miss) y 1 ciclo (hit) y de almacenamiento 1 ciclo. Suponer que la
+latencia de la instrucción de bifurcación también es de 1 ciclo.
+a. Teniendo en cuenta que las unidades funcionales están segmentadas,
+razonar en qué ciclo de reloj realizará cada instrucción las distintas etapas
+del algoritmo de Tomasulo, indicando los riesgos existentes en cada una
+de ellas. Realizar el algoritmo para dos iteraciones del bucle.
+b. ¿Cuántos ciclos de reloj tardaríamos en ejecutar una iteración del bucle si
+las unidades no estuvieran segmentadas?
+
+
+Ins | Issue | Exec    | Write | Register
+fld | 1     | 1-6     | 7     | F2 
+fld | 2     | 2-7     | 8     | F4
+fmul| 3     | 9-29    | 30    | F6 -> Necesita F4 que nos lo da fld en el 8
+fsub| 4     | 9-19    | 20    | F10 -> Necesita F4 que nos lo da fld en el 8
+fdiv| 5     | 31-61   | 62    | F8 -> Necesita F6 que nos lo da fmul en el 30
+fadd| 6     | 31-51   | 52    | F2 -> Necesita F6 que nos lo da fmul en el 30
+fsub| 21    | 63-73   | 74    | F16 -> Necesita F8 que nos lo da fdiv en el 62->Riesgo estructural
+fsd | 22    | 75-76   | --    | -- -> Necesita F16 que nos lo da fdiv en el 74
+bnez| 23    | 75-76   | --    | -- -> Necesita F8 que nos lo da fdiv en el 62
+---------------1 Iteracion-----------------------
+Ins | Issue | Exec    | Write | Register
+fld | 77    | 77-78   | 79    | F2
+fld | 78    | 78-79   | 80    | F4
+fmul| 79    | 81-111  | 112   | F6 -> Necesita F4 que nos lo da fld en el 80
+fsub| 80    | 81-91   | 92    | F10 -> Necesita F4 que nos lo da fld en el 80
+fdiv| 81    | 113-143 | 144   | F8 -> Necesita F6 que nos lo da fmul en el 112
+fadd| 82    | 113-133 | 134   | F2 -> Necesita F6 que nos lo da fmul en el 112
+fsub| 93    | 145-155 | 156   | F16 -> Necesita F8 que nos lo da fdiv en el 144->Riesgo estructural
+fsd | 94    | 157-158 | --    | -- -> Necesita F16 que nos lo da fdiv en el 156
+bnez| 95    | 157-158 | --    | -- -> Necesita F8 que nos lo da fdiv en el 144
+---------------2 Iteracion-----------------------
+---------------No Segmentadas-------------------
+Ins | Issue | Exec    | Write | Register
+fld | 1     | 1-6     | 7     | F2
+fld | 2     | 8-13    | 14    | F4
+fmul| 3     | 15-35   | 36    | F6 -> Necesita F4 que nos lo da fld en el 14
+fsub| 4     | 15-25   | 26    | F10 -> Necesita F4 que nos lo da fld en el 14
+fdiv| 5     | 37-67   | 68    | F8 -> Necesita F6 que nos lo da fmul en el 36
+fadd| 6     | 37-57   | 58    | F2 -> Necesita F6 que nos lo da fmul en el 36
+fsub| 27    | 69-79   | 80    | F16 -> Necesita F8 que nos lo da fdiv en el 68
+fsd | 28    | 81-82   | --    | -- -> Necesita F16 que nos lo da fdiv en el 80
+bnez| 29    | 81-82   | --    | -- -> Necesita F8 que nos lo da fdiv en el 68
+
+
+
+-------------------Ejercicio 6 --------------------------------------
+Suponer un predictor correlado (2, 3) que traza dos saltos.
+c. Construir la tabla de predicción suponiendo que las predicciones son
+todas T. Dibujar la máquina de estados.
+d. Considerando la siguiente secuencia de saltos, razonar cada predicción
+realizada, la entrada usada para cada predicción, las modificaciones a la
+tabla y la tasa final de predicciones correctas e incorrectas.
+Secuencia de saltos (suponer que hasta este momento todos han sido tomados):
+----------------Tabla de Predicción----------------
+Entrada     Salto      Ultimo salto        Predicción
+0           0          T T                   T
+1           0          T NT                  T->T1 (S1)
+2           0          NT T                  T
+3           0          NT NT                 T -> T1 (S3)
+4           1          T T                   T->T1 (S0)->T2 (S6)->NT(S7)->NT1(S9)
+5           1          T NT                  T
+6           1          NT T                  T
+7           1          NT NT                 T->T1 (S2)->T2(S4)->NT
+
+
+Salto    (dirección)    Resultado
+0        759         NT
+1        360         NT
+2        759         NT
+3        360         NT
+4        759         NT
+5        759         NT
+6        360         NT
+7        360         NT
+8        759         NT
+9        360         T
+
+759 mod 2 = 1
+360 mod 2 = 0
+Últimos saltos tomados: T T T NT NT NT NT NT NT NT NT NT
+Fallos:1(S0)+1(S1)+1(S2)+1(S3)+1(S4) +1(S5)+ 1(S6)+1(S7) = 9 
+Aciertos:1(S8) = 1
+Tasa de aciertos: 1/9 = 11.11%
+Tasa de errores: 8/9 = 88.89%
+Salto 0: Entrada 4 : Predicción T, Resultado NT -> Predicción incorrecta -> Modificar tabla de predicción Entrada 4 a T1
+Salto 1: Entrada 1 : Predicción T, Resultado NT -> Predicción incorrecta -> Modificar tabla de predicción Entrada 1 a T1
+Salto 2: Entrada 7 : Predicción T, Resultado NT -> Predicción incorrecta -> Modificar tabla de predicción Entrada 7 a T1
+Salto 3: Entrada 3 : Predicción T, Resultado NT -> Predicción incorrecta -> Modificar tabla de predicción Entrada 3 a T1
+Salto 4: Entrada 7 : Predicción T, Resultado NT -> Predicción incorrecta -> Modificar tabla de predicción Entrada 7 a T2
+Salto 5: Entrada 7 : Predicción T, Resultado NT -> Predicción incorrecta -> Modificar tabla de predicción Entrada 7 a NT
+Salto 6: Entrada 4 : Predicción T, Resultado NT -> Predicción incorrecta -> Modificar tabla de predicción Entrada 4 a T2
+Salto 7: Entrada 4 : Predicción T, Resultado NT -> Predicción incorrecta -> Modificar tabla de predicción Entrada 4 a NT
+Salto 8: Entrada 7 : Predicción  NT, Resultado NT -> Predicción correcta
+Salto 9: Entrada 4 : Predicción  NT, Resultado T -> Predicción incorrecta -> Modificar tabla de predicción Entrada 4 a NT1
+
+
+
+-------------------Ejercicio 7 --------------------------------------
+Considerar el siguiente código,
+int ind = 1;
+for (int i = 0; i < 64; i++){
+ind = ind * i;
+a[i] = (b[i] + c[ind - i] * c[i]) / b[i];
+d[i] = e[i] * e[i] + c[ind - i];
+}
+Asumir que el MVL de la arquitectura es 64, que hay una unidad de
+carga/almacenamiento con un tiempo de llenado de 10 ciclos, una unidad de
+multiplicación con un tiempo de llenado de 5 ciclos, una unidad de división con
+un tiempo de llenado de 8 ciclos, una unidad de suma con un tiempo de llenado
+de 6 ciclos y una unidad de resta con un tiempo de llenado de 3 ciclos.
+Asumir que a, b, c, d y e se representan mediante valores en punto flotante de
+precisión sencilla
+a. Razonar cuál es la intensidad aritmética de este código.
+b. Convertir el código en ensamblador RV64V usando strip mining.
+   loop: vld b
+         vld c ind-i
+         vld c
+         vmul c*c ind-i
+         vadd b+c*c ind-i
+         vdiv b+c*c/b
+         vst a
+         vld e
+         vmul e*e 
+         vadd e*e+c ind-i
+         vst d
+
+c. Asumiendo que hay encadenamiento, ¿cuántos chimes se requieren para
+ejecutar el código? (considerar una única unidad de acceso a memoria).
+Convoy 1: vld b -> 10 ciclos
+Convoy 2: vld c ind-i -> 10 ciclos 
+Convoy 3: vld c vmul c*c ind-i vadd b+c*c ind-i vdiv b+c*c/b -> 10+5+6+8 = 29 ciclos
+Convoy 4: vst a -> 10 ciclos
+Convoy 5: vld e vmul e*e vadd e*e+c ind-i -> 10+5+6 = 21 ciclos 
+Convoy 6: vst d -> 10 ciclos
+Total ciclos = 10+10+29+10+21+10 = 90 ciclos
+
+d. ¿Cuántos ciclos de reloj requiere este código?
+T llenado = 90
+T ejecucion = Chimes * 64 + T llenado
+T ejecucion = 90 + 64 * 6 = 570 ciclos
+
+e. Repetir el apartado anterior considerando ahora que hay cuatro unidades
+de acceso a memoria.
+Convoy 1: vld b vld c ind-i vld c vmul c*c ind-i vadd b+c*c ind-i vdiv b+c*c/b vst a -> 10+10+10+5+6+8+10 = 69 ciclos
+Convoy 2: vld e vmul e*e vadd e*e+c ind-i vst d -> 10+5+6+10 = 31 ciclos
+Total ciclos = 69+31 = 100 ciclos
+T ejecucion = 100 + 64 * 2 = 228 ciclos
+
+
+
+-------------------Ejercicio 8 --------------------------------------
+Desarrollar el modelo roofline de los siguientes casos:
+a. Procesador con rendimiento pico de 40 GFLOP/s con ancho de banda de
+memoria de 30 GB/s.
+Intensidad aritmética = 40 / 30 = 1.33
+
+
+   |
+   |
+40 |-------------------------------|-------------------------------------------------
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+30 |------------|                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |____________|__________________|___________________________________________________
+   |            1                 1.33
+
+   Para intensidad aritmética de 0.5 -> Ancho de banda de memoria limita
+   Para intensidad aritmética de 1   -> Ancho de banda de memoria limita
+   Para intensidad aritmética de 3   -> Rendimiento pico limita
+   Para intensidad aritmética de 10  -> Rendimiento pico limita
+
+
+
+
+b. Procesador con rendimiento pico de 30 GFLOP/s con ancho de banda de
+memoria de 1 GB/s.
+Intensidad aritmética = 30 / 1 = 30
+Para intensidad aritmética de 0.5 -> Ancho de banda de memoria limita
+   Para intensidad aritmética de 1  -> Ancho de banda de memoria limita
+   Para intensidad aritmética de 3  -> Ancho de banda de memoria limita
+   Para intensidad aritmética de 10 -> Ancho de banda de memoria limita
+
+
+   |
+   |
+30 |-------------------------------|-------------------------------------------------
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+ 1 |------------|                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |____________|__________________|___________________________________________________
+   |            1                 30
+
+
+c. Procesador con rendimiento pico de 15 GFLOP/s con ancho de banda de
+memoria de 20 GB/s.
+Intensidad aritmética = 15 / 20 = 0.75
+Para intensidad aritmética de 0.5 -> Ancho de banda de memoria limita
+   Para intensidad aritmética de 1 -> Rendimiento pico limita
+   Para intensidad aritmética de 3 -> Rendimiento pico limita
+   Para intensidad aritmética de 10  -> Rendimiento pico limita
+
+
+   |
+   |
+20 |-------------------------------|-------------------------------------------------
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+15 |------------|                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |____________|__________________|___________________________________________________
+   |           0.75                1
+Para cada uno de los casos anteriores, explicar qué limita el rendimiento
+considerando las siguientes intensidades aritméticas: 0.5, 1, 3 y 10
+
+
+
+
+-------------------Ejercicio 9 --------------------------------------
+Considerar una hipotética GPU con las siguientes características:
+● 2.5 GHz de frecuencia de reloj
+● Contiene 15 procesadores SIMD, cada uno con 10 unidades en punto
+flotante de precisión doble.
+● 200 GB/s de ancho de banda a la memoria off-chip.
+Sin considerar el ancho de banda de memoria, ¿cuál es el throughput pico (en
+GFLOP/s) para operaciones en punto flotante de precisión sencilla? ¿Es este
+throughput sostenible dada la limitación del ancho de banda de memoria?
+
+Tasa de reloj = 2.5 GHz
+N procesadores = 15
+N unidades = 10
+Ancho de banda = 200 GB/s
+Throughput pico = 2.5 * 15 * 10 = 375 GFLOP/s
+Throughput sostenible = 200 GB/s / 4 = 50 GFLOP/s
+Cada flop requiere 2 operandos y 1 resultado, 2 loads y un stores ->12 B por FLOPS
+375 GFLOP/s * 12 B/flop = 4500 GB/s -> 4,5 TB/s
+4500 GB/s > 200 GB/s -> No es sostenible
+
+

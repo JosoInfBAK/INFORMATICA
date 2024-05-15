@@ -1,0 +1,29 @@
+.FormIsland {
+  display: flex;
+  transform: translate(50%, 50%);
+  width: 50%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 20px;
+}
+.inputlogin{
+  width: 100%;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+}
+.buttonlogin{
+  width: 100%;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+}

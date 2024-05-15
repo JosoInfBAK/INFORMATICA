@@ -1,0 +1,48 @@
+body {
+  background-color: black;
+}
+h1 {
+  color: white;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#home {
+  position: relative;
+  margin: 10px auto;
+  width: 100px;
+  height: fit-content;
+  left: 60%;
+  background-color: white;
+  align-self: center;
+}
+
+#Next {
+  position: relative;
+  margin: 10px auto;
+  width: 100px;
+  height: fit-content;
+  left: 40%;
+  background-color: white;
+  align-self: center;
+}
+#Previous {
+  position: relative;
+  margin: 10px auto;
+  width: 100px;
+  left: 50%;
+  height: fit-content;
+  background-color: white;
+  align-self: center;
+}
+
+#characters {
+  display: flex;
+  align-self: center;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: black;
+  color: white;
+}

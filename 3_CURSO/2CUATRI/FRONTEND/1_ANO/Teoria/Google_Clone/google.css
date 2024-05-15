@@ -1,0 +1,472 @@
+body{
+  width: 100%;
+  height: 100%;
+  max-width: 90%;
+  max-height: 90%;
+}
+@font-face {
+  font-family: myFirstFont;
+  src: url(res/gfont.ttf);
+}
+
+.searchbar {
+  max-width: 40.25rem;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.wrapper {
+  position: absolute;
+  width: 100%;
+  max-width: 31.25rem;
+  margin: 6rem auto;
+}
+
+#searchQueryInput {
+  width: 100%;
+  height: 2.8rem;
+  background: #f5f5f5;
+  outline: none;
+  border: none;
+  border-radius: 1.625rem;
+  padding: 0 3.5rem 0 3rem;
+  font-size: 1rem;
+  margin: 40px;
+}
+.logo {
+  cursor: pointer;
+}
+
+#searchQuerySubmit {
+  position: absolute;
+  width: 3.5rem;
+  left: 15%;
+  top: 33%;
+  height: 2.8rem;
+  margin-left: -3.5rem;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+#searchQuerySubmit:hover {
+  cursor: pointer;
+}
+.G#first {
+  top: 18%;
+  left: 43%;
+  margin: auto;
+  position: absolute;
+  font-size: 5rem;
+  font-family: myFirstFont;
+  color: rgb(53, 127, 202);
+}
+.O#first {
+  top: 18%;
+  left: 46.3%;
+  margin: auto;
+  position: absolute;
+  font-size: 5rem;
+  font-family: myFirstFont;
+  color: rgb(243, 86, 42);
+}
+.O#second {
+  top: 18%;
+  left: 48.7%;
+  margin: auto;
+  position: absolute;
+  font-size: 5rem;
+  font-family: myFirstFont;
+  color: rgb(243, 223, 42);
+}
+.G#second {
+  top: 18%;
+  left: 51.1%;
+  margin: auto;
+  position: absolute;
+  font-size: 5rem;
+  font-family: myFirstFont;
+  color: rgb(53, 127, 202);
+}
+
+.L {
+  top: 18%;
+  left: 53.5%;
+  margin: auto;
+  position: absolute;
+  font-size: 5rem;
+  font-family: myFirstFont;
+  color: rgb(7, 122, 40);
+}
+
+.E {
+  top: 18%;
+  left: 54.4%;
+  margin: auto;
+  position: absolute;
+  font-size: 5rem;
+  font-family: myFirstFont;
+  color: rgb(243, 86, 42);
+}
+.containerbtn {
+  position: absolute;
+  display: block;
+  height: 115px;
+  width: 100px;
+  border-radius: 5px;
+  border: 1px solid rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+.containerbtn:hover {
+  background-color: rgb(200, 200, 200);
+  border: 1px solid rgb(200, 200, 200);
+}
+.containerbtn#one {
+  top: 40%;
+  left: 37%;
+}
+.containerbtn#two {
+  top: 40%;
+  left: 44%;
+
+  cursor: pointer;
+}
+.containerbtn#three {
+  top: 40%;
+  left: 51%;
+}
+.containerbtn#four {
+  top: 40%;
+  left: 58%;
+}
+.containerbtn#five {
+  top: 52%;
+  left: 37%;
+}
+.containerbtn#six {
+  top: 52%;
+  left: 44%;
+}
+.containerbtn#seven {
+  top: 52%;
+  left: 51%;
+}
+.containerbtn#eight {
+  top: 52%;
+  left: 58%;
+}
+
+p {
+  line-height: 20px;
+}
+
+.dots:after {
+  position: relative;
+  top: 45%;
+  left: 30%;
+  cursor: pointer;
+  color: #444;
+  content: "\2807";
+  font-size: 20px;
+}
+.dotscontainer {
+  border-radius: 50%;
+  position: relative;
+  top: -40%;
+  left: 70%;
+  height: 25px;
+  width: 25px;
+}
+.dotscontainer:hover {
+  background-color: rgb(170, 170, 170);
+  border: 1px solid rgb(170, 170, 170);
+}
+.rightBar {
+  position: absolute;
+  top: 3%;
+  left: 85%;
+  width: 20%;
+  height: 100%;
+  background-color: rgb(255, 255, 255);
+}
+.gmail {
+  color: rgb(62, 62, 62);
+  font-size: 16px;
+  position: absolute;
+  top: 0%;
+  left: 10%;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+}
+.gmail:hover {
+  text-decoration: underline;
+}
+.imagenes {
+  color: rgb(62, 62, 62);
+  font-size: 16px;
+  position: absolute;
+  top: 0%;
+  left: 25%;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+}
+.imagenes:hover {
+  text-decoration: underline;
+}
+.bento-menu {
+  position: absolute;
+  cursor: pointer;
+  display: grid;
+  left: -600%;
+  top: -1%;
+  grid-template-columns: repeat(3, 0.2fr);
+  grid-template-rows: repeat(3, 0.2fr);
+  grid-column-gap: 0.5px;
+  grid-row-gap: 0.5px;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+.bento-menu:hover {
+  background-color: rgb(200, 200, 200);
+  border: 1px solid rgb(200, 200, 200);
+}
+
+.showLeft {
+  background-color: white !important;
+  border: 1px solid white !important;
+  text-shadow: white !important;
+  color: black !important;
+  padding: 10px;
+}
+.icons li {
+  background: none repeat scroll 0 0 black;
+  height: 7px;
+  width: 7px;
+  line-height: 0;
+  list-style: none outside none;
+  margin-right: 15px;
+  margin-top: 3px;
+  vertical-align: top;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.btn-left {
+  left: 0.4em;
+}
+.btn-right {
+  right: 0.4em;
+}
+.btn-right {
+  position: relative;
+  top: 0.24em;
+}
+.dropbtn {
+  position: absolute;
+  left: 105%;
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropbtn:hover,
+.dropbtn:focus {
+  background-color: #3e8e41;
+}
+.dropdown {
+  position: absolute;
+  left: 80%;
+  top: 0%;
+  display: grid;
+  right: 0.4em;
+}
+.dropdown-content {
+  display: none;
+  position: relative;
+  margin-top: 60px;
+  background-color: #f9f9f9;
+  min-width: 200px;
+  max-width: 300px;
+  overflow: auto;
+  line-height: 100%;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content yt {
+  position: relative;
+  top :0%;
+  left: 5%;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  border-radius: 20px;
+  max-width: 50px;
+  min-width: 50px;
+  min-height: 60px;
+  line-height: 100%;
+  display: flex;
+  cursor: pointer;
+}
+.dropdown-content sr {
+  position: absolute;
+  top :0%;
+  left: 70%;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  border-radius: 20px;
+  max-width: 50px;
+  min-width: 50px;
+  min-height: 60px;
+  line-height: 100%;
+  display: grid;
+  cursor: pointer;
+}
+
+.dropdown-content maps {
+  position: absolute;
+  top :0%;
+  left: 40%;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  border-radius: 20px;
+  max-width: 50px;
+  min-width: 50px;
+  min-height: 60px;
+  line-height: 100%;
+  display: grid;
+  cursor: pointer;
+}
+.dropdown-content play {
+  position: relative;
+  top :4%;
+  left: 5%;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  border-radius: 20px;
+  max-width: 50px;
+  min-width: 50px;
+  min-height: 60px;
+  line-height: 100%;
+  display: flex;
+  cursor: pointer;
+}
+.dropdown-content gmail {
+  position: absolute;
+  top :60%;
+  left: 70%;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  border-radius: 20px;
+  max-width: 50px;
+  min-width: 50px;
+  min-height: 60px;
+  line-height: 100%;
+  display: grid;
+  cursor: pointer;
+}
+
+.dropdown-content drive {
+  position: relative;
+  position: absolute;
+  top :60%;
+  left: 40%;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  border-radius: 20px;
+  max-width: 50px;
+  min-width: 50px;
+  min-height: 60px;
+  line-height: 100%;
+  display: grid;
+  cursor: pointer;
+}
+
+.dropdown-content span {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dropdown-content img {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  width: 60%;
+  height: 60%;
+  transform: translate(-50%, -50%);
+}
+.dropdown sr:hover {
+  background-color: #b5c0c2;
+}
+
+.dropdown yt:hover {
+  background-color: #b5c0c2;
+}
+.dropdown maps:hover {
+  background-color: #b5c0c2;
+}
+.dropdown play:hover {
+  background-color: #b5c0c2;
+}
+.dropdown gmail:hover {
+  background-color: #b5c0c2;
+}
+.dropdown drive:hover {
+  background-color: #b5c0c2;
+}
+.show {
+  display: block;
+}
+
+.bento-dot {
+  position: relative;
+  display: block;
+  top: 100%;
+  left: 120%;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: #464646;
+  overflow: hidden;
+}
+.profile {
+  position: relative;
+  display: flex;
+  top: -1%;
+  left: 60%;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 1px solid rgb(220, 220, 220);
+  background-color: rgb(220, 220, 220);
+  cursor: pointer;
+}
+
+#btn {
+  position: relative;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 1px solid rgb(220, 220, 220);
+  background-color: rgb(220, 220, 220);
+  cursor: pointer;
+}

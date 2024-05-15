@@ -1,0 +1,66 @@
+
+-════════════════════════════════════════════════════════════════════════════════MEMORIA════════════════════════════════════════════════════════════════════════════════════════════════
+                                   
+
+
+⚪Paginación: Se divide la memoria en paginas, cada pagina tiene un tamaño fijo, y se asigna a un proceso. Se asigna una tabla de paginas a cada proceso,
+donde se almacena la direccion fisica de cada pagina.
+
+⚪Segmentacion: Se divide la memoria en segmentos, cada segmento tiene un tamaño variable, y se asigna a un proceso. Se asigna una tabla de segmentos a cada proceso,
+donde se almacena la direccion fisica de cada segmento.
+
+⚪Caches y memoria virtual: Mmeoria anterior a la memoria fisica, guarda informacion para tener acceso mucho mas rapido,
+                          es una copia de una memoria localizada en otro lugar de la memoria fisica.
+Se estructuran siempre dos niveles de caché. El nivel 1 es el más rápido y el nivel 2 es el más lento. La caché de nivel 1
+se estructura en dos mitades, una dedicada a datos y otra a instrucciones. La caché de nivel 1 se direcciona de manera virtual 
+(Referencia a tabla de traduccion) y la de nivel 2 se direcciona fisicamente.
+
+⚪Memoria virtual: Cuando un proceso no tiene suficiente memoria, se crea una copia de la memoria en un disco duro, para poder acceder 
+a ella mas rapido que a un disco duro, se usa un algoritmo de reemplazo de paginas.
+
+⚪Demanding page: Se va solicitando una pagina segun se vaya necesitando, en función de la disponibilidad de creación de estas.
+TLB: Tabla de traducción de paginas, es una tabla que contiene la traducción de direcciones virtuales a direcciones físicas.
+
+⚪Virtual or physical dirty bit: bit empleado sobre una página para ver si ha sido modificada antes de ser opedida, utilizado en el MIPS.
+
+⚪Hardware loaded TLB: Emula el dirty bit, duplica la tabla de permisos, asignandoles R/O a todos, comprueba los permisos haciendo así que salte
+un kernel trap, y si se modifica la pagina, se cambia el permiso a R/W en la modificada, así se evita el dirty bit pero se emula con ese kernel trap.
+
+⚪Hay una alternativa para crear ficheros evitando llamadas al sistema, se realiza con mapeo de memoria. Se duplica el contenido del fichero en una variable
+en memoria virtual y esa variable es la que pude modificarse.
+
+⚪Política de reemplazamiento de caché: FIFO, LRU, LFU, Random, MIN.
+⚪Algoritmo de reemplazo de paginas: Se elige una pagina para ser reemplazada, y se copia en el disco duro, y se carga la nueva pagina.
+⚫Random: Se elige una pagina aleatoriamente para ser reemplazada.
+⚫FIFO: Se elige la pagina que lleva mas tiempo en la memoria, puede que se eliminen las entradas mas empleadas.
+⚫LRU: Se elige la pagina que lleva mas tiempo sin ser empleada.
+⚫LFU: Se elige la pagina que menos veces ha sido empleada.
+⚫MIN: Se elige la pagina que se prevee que va a ser empleada menos veces.
+
+
+⚪Thrashing y Swapping: Se produce cuando el sistema no puede mantener la memoria virtual en memoria principal, y se produce un intercambio continuo de paginas entre memoria principal y memoria virtual.
+ ⚫Zipf: Distribución de probabilidad de que un elemento sea elegido, se usa para predecir el comportamiento de los sistemas de almacenamiento de datos.
+⚪Memoria asociativa: Se puede acceder a cualquier direccion de memoria, pero no se puede acceder a una direccion de memoria sin conocer la direccion de memoria anterior.
+⚪Page Coloring: Evitar que las páginas se localicen en memoria física de manera contigüa o cercana.
+
+
+
+
+                 ▄█▄
+                ▄███▄
+               ▄█████▄
+              ▄███████▄
+             ▄ ▀▀██████▄
+            ▄██▄▄ ▀█████▄
+           ▄█████████████▄
+          ▄███████████████▄
+         ▄█████████████████▄
+        ▄███████████████████▄
+       ▄█████████▀▀▀▀████████▄
+      ▄████████▀      ▀███████▄
+     ▄█████████        ████▀▀██▄
+    ▄██████████        █████▄▄▄
+   ▄██████████▀        ▀█████████▄
+  ▄██████▀▀▀              ▀▀██████▄
+ ▄███▀▀                       ▀▀███▄
+▄▀▀                               ▀▀▄

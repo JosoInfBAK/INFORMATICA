@@ -1,0 +1,22 @@
+==================================================== Repaso Tema 1 ====================================================
+-¿Qué es un sistema operativo?
+ Software que gestiona los recursos de un ordenador y proporciona una interfaz entre el usuario y el hardware.
+
+ -Roles del sistema operativo:
+   1. Referee: controla el acceso al hardware, aisla los usuarios y aplicaciones entre ellas y se encarga de las comunicaciones entre estos.
+   2. Illusionist: Cada aplicacion cree que tiene acceso completo a todo el hardware, emula un numero infinito de procesadores 
+   3. Glue: Provee una serie de  servicios comunes y estandar para las aplicaciones.
+
+-Evaluacion de un sistema operativo:
+  1. Fiabilidad: El sistema operativo es capaz de realizar las tareas para las que ha sido diseñado.
+  2. Disponibilidad: Debe de proporcinar los recursos disponibles cuando se necesiten y debe ser rapido a la hora de repararse.
+  3. Seguridad: Debe ser capaz de defenderse de ataques externos y de los usuarios.
+  4. Privacidad: Debe proporcionar los datos solo a los usuarios autorizados.
+  5. Portabilidad: Debe ser capaz de ejecutarse en diferentes plataformas.
+  6. Rendirimiento: -Overhead: Cuanto trabajo extra realiza el S.O.
+                  -Throughput: Numero de tareas que se pueden ejecutar en un tiempo determinado.
+                  -Latencia: Tiempo que se tarda en ejecutar una tarea.
+                  -Predictibilidad: Como de consistente es el rendimiento mantenido en el tiempo.
+                  -Justo: Como de equitativo es el rendimiento entre las tareas.
+  7. Adopcion: Caunta gente lo usa, cuantas aplicaciones hay disponibles y esta disponible para todo el hardware.
+  

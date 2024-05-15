@@ -1,0 +1,262 @@
+--------------------------Ejercicio 1--------------------------
+Suponer que se implementa el algoritmo de Tomasulo en una máquina basada
+en MIPS, la cual ejecuta el siguiente código:
+Loop: fld F2, 0(x1)
+fld F4, 0(x2)
+fadd F6, F2, F4
+fmul F6, F6, F4
+fsub, F8, F4, F2
+fmul, F6, F2, F4
+fadd F10, F6, F8
+fsd F10, 0(x1)
+bnez F10, Loop
+Considerar que hay un sumador/restador en punto flotante (con una latencia de
+ejecución de 10 ciclos y 2 estaciones de reserva) y un multiplicador en punto
+flotante (con una latencia de ejecución de 20 ciclos y 2 estaciones de reserva).
+Asimismo, considerar que hay 2 estaciones de reserva de carga y otras 2 de
+almacenamiento, siendo la latencia de ejecución de carga de 5 ciclos (miss) y 1
+ciclo (hit) y de almacenamiento 1 ciclo. Suponer que la latencia de la instrucción
+de bifurcación también es de 1 ciclo.
+a. Teniendo en cuenta que las unidades funcionales están segmentadas,
+    razonar en qué ciclo de reloj realizará cada instrucción las distintas etapas
+    del algoritmo de Tomasulo, indicando los riesgos existentes en cada una
+    de ellas. Realizar el algoritmo para dos iteraciones del bucle.
+b. ¿Cuántos ciclos de reloj tardaríamos en ejecutar una iteración del bucle si
+    las unidades no estuvieran segmentadas?
+
+a.---------------------------------------------------------------------------
+
+loads-> 5 ciclos por miss y 1 por hit y max 2
+stores-> 1 ciclo y max 2
+add/sub-> 10 ciclos y max 2
+mult-> 20 ciclos y max 2
+
+Ins | Issue | Exec  | Write | Register
+fld | 1     | 1-6   | 7     | F2
+fld | 2     | 2-7   | 8     | F4
+fadd| 3     | 9-19  | 20    | F6
+fmul| 4     | 21-41 | 42    | F6
+fsub| 5     | 9-19  | 21    | F8 -> Riesgo estructural por write en ciclo 19 de F6 -> Unidades de add/sub llenas hasta 19 y necesitamos F6 y hay que esperar
+fmul| 6     | 9-29  | 30    | F6 -> Riesgo estructural por write en ciclo 41 de F6 -> Unidades multiplicador llenas hasta 42
+fadd| 21    | 31-41 | 43    | F10 -> Solo una unidad de add/sub disponible hasta 54 
+fsd | 22    | 44-45 | -     |     -> Hay que esperar hasta escritura de F10 en 54
+bnez| 23    | 44-45 | -     |     -> Hay que esperar hasta escritura de F10 en 54
+-----------------1 iteración-----------------
+Ins | Issue | Exec  | Write | Register
+fld |46     | 46-47 | 48    | F2
+fld |47     | 47-48 | 49    | F4
+fadd|48     | 50-60 | 61    | F6
+fmul|49     | 62-82 | 83    | F6
+fsub|50     | 50-60 | 62    | F8 -> Riesgo estructural por write en ciclo 71 de F6 -> Unidades de add/sub llenas hasta 71
+fmul|51     | 51-71 | 72    | F6 -> Riesgo estructural por write en ciclo 93 de F6 -> Unidades multiplicador llenas hasta 94
+fadd|62     | 73-83 | 84    | F10 -> Solo una unidad de add/sub disponible hasta 106 -> movidita
+fsd |63     | 85-86 | -     |     -> Hay que esperar hasta escritura de F10 en 106
+bnez|64     | 85-86 | -     |     -> Hay que esperar hasta escritura de F10 en 106
+-----------------2 iteración-----------------
+----------------No segmentadas----------------
+Ins | Issue | Exec  | Write | Register
+fld |1      | 1-6   | 7     | F2
+fld |8      | 8-13  | 14    | F4
+fadd|9      | 15-25 | 26    | F6
+fmul|10     | 27-47 | 48    | F6
+fsub|11     | 15-25 | 27    | F8 -> Riesgo estructural por write en ciclo 25 de F6 -> Unidades de add/sub llenas hasta 25
+fmul|12     | 15-35 | 36    | F6 -> Riesgo estructural por write en ciclo 47 de F6 -> Unidades multiplicador llenas hasta 47
+fadd|27     | 37-47 | 49    | F10 -> Solo una unidad de add/sub disponible hasta 68 -> movidita
+fsd |28     | 50-51 | -     |     -> Hay que esperar hasta escritura de F10 en 68
+bnez|29     | 50-51 | -     |     -> Hay que esperar hasta escritura de F10 en 68
+-----------------1 iteración-----------------
+
+--------------------------Ejercicio 2--------------------------
+
+Suponer un predictor correlado (1, 2) que traza cuatro saltos. Considerando la
+siguiente tabla de predicción y secuencia de saltos, razonar cada predicción
+realizada, la entrada usada para cada predicción, las modificaciones a la tabla y
+la tasa final de predicciones correctas e incorrectas.
+Tabla de predicción:
+ 
+Entrada     Salto      Ultimo salto        Predicción
+0           0          T                   T->T1 (S10)-> T(S14)
+1           0          NT                  NT1->NT (S2)->NT1 (S5)
+2           1          T                   NT1->T (S9)
+3           1          NT                  T
+4           2          T                   T->T1 (S6)->NT (S12)
+5           2          NT                  T ->T1 (S1)
+6           3          T                   NT1->NT (S0)->NT1 (S8)
+7           3          NT                  NT1->T (S7)
+Secuencia de saltos (suponer que hasta este momento todos han sido tomados):
+3
+Salto   Direccion         Resultado
+0       259               NT
+1       374               NT
+2       680               NT
+3       953               T
+4       259               NT
+5       680               T
+6       374               NT
+7       259               T
+8       259               T
+9       953               T
+10      680               NT
+11      953               T
+12      374               NT
+13      953               T
+14      680               T
+ -------------------Diagrama -------------------
+    
+
+---------------Resolución----------------------
+Ultimo salto : T,NT,NT,NT,T,NT,T,NT,T,T,T,NT,T,NT,T,T
+259 mod 4 = 3
+374 mod 4 = 2
+680 mod 4 = 0
+953 mod 4 = 1
+
+Errores = 1 (1) + 1 (5) + 1 (6) + 1 (7) + 1 (8) + 1 (9) + 1 (10) + 1 (12) = 8
+Aciertos = 1 (0) + 1 (2) + 1 (3) + 1 (4) + 1 (11) + 1 (13) + 1 (14) = 7
+Tasa de aciertos = 7/15 = 0.4666666666666667
+Tasa de errores = 8/15 = 0.5333333333333333
+
+Salto 0 259 para ultimo salto T -> Entrada 6 -> Predicción NT1 -> Se ha elegido NT -> Acierto Modificamos entrada 6 a NT
+Salto 1 374 para ultimo salto NT -> Entrada 5 -> Predicción T -> Se ha elegido NT -> Error Modificamos entrada 5 a T1
+Salto 2 680 para ultimo salto NT -> Entrada 1 -> Predicción NT1 -> Se ha elegido NT -> Acierto Modificamos entrada 1 a NT1
+Salto 3 953 para ultimo salto NT -> Entrada 3 -> Predicción T -> Se ha elegido T -> Acierto
+Salto 4 259 para ultimo salto T -> Entrada 6 -> Predicción NT -> Se ha elegido NT -> Acierto
+Salto 5 680 para ultimo salto NT -> Entrada 1 -> Predicción NT -> Se ha elegido T -> Error Modificamos entrada 1 a NT1
+Salto 6 374 para ultimo salto T -> Entrada 4 -> Predicción  T -> Se ha elegido NT -> Error Modificamos entrada 4 a T1 
+Salto 7 259 para ultimo salto NT -> Entrada 7 -> Predicción NT1 -> Se ha elegido T -> Error Modificamos entrada 7 a NT2
+Salto 8 259 para ultimo salto T -> Entrada 6 -> Predicción NT -> Se ha elegido T -> Error Modificamos entrada 6 a NT1
+Salto 9 953 para ultimo salto T -> Entrada 2 -> Predicción NT1 -> Se ha elegido T -> Error Modificamos entrada 2 NT2
+Salto 10 680 para ultimo salto NT -> Entrada 0 -> Predicción T -> Se ha elegido NT -> Error Modificamos entrada 0 T1
+Salto 11 953 para ultimo salto T -> Entrada 3 -> Predicción T -> Se ha elegido T -> Acierto
+Salto 12 374 para ultimo salto T -> Entrada 4 -> Predicción T1 -> Se ha elegido NT -> Error Modificamos entrada 4 a T2
+Salto 13 953 para ultimo salto NT -> Entrada 3 -> Predicción T -> Se ha elegido T -> Acierto
+Salto 14 680 para ultimo salto T -> Entrada 0 -> Predicción T1 -> Se ha elegido T -> Acierto Modificamos entrada 0 a T
+
+--------------------------Ejercicio 3--------------------------
+Considerar el siguiente código,
+for (i = 0; i < 300; i++) {
+ d[i] = a[i] + b[i] * c[i];
+ e[i] = a[i] * b[i] + c[i];
+}
+Asumir que el MVL de la arquitectura es 64, que hay una unidad de
+carga/almacenamiento con un tiempo de llenado de 10 ciclos, una unidad de
+multiplicación con un tiempo de llenado de 5 ciclos y una unidad de suma con
+un tiempo de llenado de 6 ciclos.
+Asumir que a, b, c, d y e se representan mediante valores en punto flotante de
+precisión sencilla
+a. Razonar cuál es la intensidad aritmética de este código.
+b. Convertir el código en ensamblador RV64V usando strip mining.
+c. Asumiendo que hay encadenamiento, ¿cuántos chimes se requieren para
+ejecutar el código? (considerar una única unidad de acceso a memoria).
+d. Suponer que el código se ejecuta en un procesador con un ancho de
+banda de memoria de 30 GB/s. ¿Estará el rendimiento de este código
+limitado por la memoria o por el procesador?
+e. Desarrollar un modelo roofline para este procesador, suponiendo que
+tiene un rendimiento pico computacional de 85 GFLOP/s.
+
+------------------Traduccion a RV64V--------------------------------------
+loop: vld b
+      vld c
+      vmul b,c
+      vld a
+      vadd b,a
+      vst d
+      vmul a,b
+      vaddd c,a
+      vst e
+      
+     
+----------------Intensidad aritmetica--------------------------------------
+FLOPS = 4
+Loads = 3 
+Stores = 2
+Loads + Stores = 5
+Bytes leidos = 5 * 4 = 20
+Intensidad aritmetica = 4 / 20 = 0.2
+-----------------Chimes---------------------------------------------------
+Convoy 1: vld -> 10 ciclos
+Convoy 2: vld, vmul -> 10 + 5 = 15 ciclos
+Convoy 3: vld, vadd -> 10 + 6 = 16 ciclos
+Convoy 4: vst, vmul, vadd-> 10 + 5 + 6 = 21 ciclos
+Convoy 5: vst -> 10 ciclos
+Total = 10 + 15 + 16 + 21 + 10 = 72 ciclos
+-----------------Rendimiento----------------------------------------------
+Rendimiento = Intensidad aritmetica * Ancho de banda de memoria = 0.2 * 30 = 6 GFLOPS
+Si el rendimiento pico es mayor que 6 GFLOPS, el rendimiento estará limitado porel anchode banda de memoria, si es mayor, estará limitado por el procesador
+   |
+   |
+30 |-------------------------------|
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+ 6 |------------|                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |____________|__________________|___________________________________________________
+    |           0.2                1
+
+------------------------------Modelo roofline con 85 GFLOPS--------------------------------
+Rendimiento = 85 GFLOPS
+Ancho de banda = 30 GB/s
+Intensidad Aritmetica = 85 GFLOPS / 30 GB/s = 2.83
+Intensidad aritmetica para 30 GB/s = 1
+Intensidad aritmetica para 85 GFLOPS = 30 GB/s
+   |
+   |
+85 |-------------------------------|---------------------------------------------------------------------
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+30 |------------|                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |____________|__________________|___________________________________________________
+                1               2.83
+
+
+--------------------------Ejercicio 4--------------------------
+Estudiar el efecto de la estrategia critical word first en los fallos de una caché L2.
+Asumir una caché L2 de 2MB, con bloques de 64 bytes y un puerto de acceso de
+8 bytes de ancho. El tiempo para recibir el primer bloque de 8 bytes del
+controlador de memoria es de 120 ciclos. Cada bloque de 8 bytes adicional
+requiere de otros 16 ciclos.
+a) ¿Cuántos ciclos se necesitarían de media para gestionar un fallo en la
+    cache L2, con y sin la estrategia critical word first?
+L2->2MB / 64B = 32768 bloques
+64/8 = 8 accesos por bloque
+120 + 16 * 7 = 232 ciclos sin critical word first para el peor de los casos
+120  = 120 ciclos sin critical word first para el mejor de los casos
+248+136/2 = 176 ciclos de media sin critical word first
+120  = 120 ciclos con critical word first 
+
+
+
+
+
+
+                   88                        
+                   ""                        
+                                             
+88,dPYba,,adPYba,  88 8b,dPPYba,  ,adPPYba,  
+88P'   "88"    "8a 88 88P'    "8a I8[    ""  
+88      88      88 88 88       d8  `"Y8ba,   
+88      88      88 88 88b,   ,a8" aa    ]8I  
+88      88      88 88 88`YbbdP"'  `"YbbdP"'  
+                      88                     
+                      88         

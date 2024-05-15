@@ -1,0 +1,92 @@
+
+body {
+    background-color: #000000;
+}
+h1 {
+font: roboto;
+    position: relative;
+    top: 0px;
+    text-align: center;
+    color: #74F0ED;
+}
+#input1 {
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+    left: 45%;
+    top: 0%;
+    width: 10%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+#resText{
+    color: #1ebbb8;
+}
+#search {
+    position: relative;
+    top: 5%;
+    left: 47%;
+    display: block;
+    margin: 0 auto;
+    background-color: #025b8f;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    align-self: center;
+}
+#characters {
+    position: relative;
+    width: 50%;
+    top: 10%;
+    left: 25%;
+    display: block;
+    margin: 0 auto;
+    background-color: #025b8f;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    align-self: center;
+}
+#eps {
+    position: relative;
+    top: 10%;
+    left: 0%;
+    display: block;
+    margin: 0 auto;
+    background-color: #68a7f5;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    align-self: center;
+}
+#url {
+    position: relative;
+    top: 10%;
+    left: 0%;
+    display: block;
+    margin: 0 auto;
+    background-color: #68a7f5;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    align-self: center;
+}
+
+

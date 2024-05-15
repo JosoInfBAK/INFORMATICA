@@ -1,0 +1,198 @@
+============================ Repaso Tema 2a Procesos ============================
+-Proceso de carga de un sistema operativo: 
+ 1. BIOS
+ 2. Bootloader (GRUB)
+ 3. Kernel
+ 4. LogIn
+-Concepto de kernel:
+ Nivel mas bajo de software que corre sobre el equipo y tiene acceso compleato a todo el hardware .
+-Concepto de proceso:
+ Abstracción del sistema operativo para ejecutar un programa con privilegios limitados.
+ Proporcionado por el kernel.
+ Es la instancia de ejecución de un programa con privilegios limitados.
+-Concepto de hilo:
+ Secuencia de instrucciones que se ejecutan en un proceso.
+-Espacio de direcciones:
+ Memoria a la que un proceso puede acceder.
+-PCB o Process Control Block:
+ Estructura de datos que contiene la información necesaria para administrar un proceso.
+
+ -Modos de operacion del kernel:
+    1. Modo kernel: 
+        -Acceso completo a todos los recursos del sistema.
+        -Leer/escribir en cualquier memoria, acceder a cualquier dispositivo de E/S, leer/escribir cualquier sector de disco,
+         enviar/leer cualquier paquete
+        -Limita las operaciones privilegiadas que no estan disponibles para el usuario.
+        -Limita el acceso de memoria para que no se pueda sobreescribir la memoria del kernel.
+        -Controla el temporizador que devolvera ael control si el programa de usuario entra en bucle.
+    2. Modo usuario:
+        -Acceso limitado a los recursos del sistema.
+
+-Cambio de modo y contexto se produce por :
+                                           -------- De usuario a Kernel ---------------
+                                            -Interrupciones: Disparadas por el timer o dispositivos I/O
+                                            -Excepciones: Disparadas por comportamientos inesperados del programa o comportamientos maliciosos.
+                                            -Syscalls: Peticion de un programa para realizar una funcion en nombre del kernel.
+                                            -------- De Kernel a usuario ---------------
+                                            -Nuevo proceso/thread: Se comienza a ejecutar la primera instruccion del proceso/hilo.
+                                            -Return de la interrupcion, excepcion o syscall: Se reanuda la ejecucion suspendida.
+                                            -Cambio de contexto del proceso: Se reanuda algun otro proceso.
+                                            -Upcall a nivel de usuario: Notificación asíncrona a nivel de usuario.
+
+-Vector de interrupciones : Vectore que almacen ala dirección de atención de la interrupción. Es una tabla declarada por el kernel en el que se encuantran las instrucciones a realizar por evento.
+-Tras dispararse una interrupción se necesita salvar el contexto previo de manera atómica para poder restaurarlo posteriormente, se guarda el SP,PC, El modo de operación y la protección de memoria.
+-Al finalizar la interrupción: El manejador restaurara los registros previos, el SP, el PC y se regresará a modo usuario.
+-Pasos en el cambio de contexto: 
+                                1.- User Stub: Se detecta una instruccion que requiere el cambio de contexto.
+                                2.- Hardware Trap: Se cambia al modo kernel, copiando los argumentos de la memoria del usuario al kernel y se verifican los permisos. También aquí se salva el contexto.
+                                3.- Kernel Stub: Se realiza la operacion requerida en modo kernel.
+                                4.- Trap Return: Se cambia al modo usuario, copiando los resultados de la memoria del kernel al usuario y se restaura el contexto. 
+                                5.- User Return: Se regresa al usuario y se sigue con el flujo normal del programa.
+
+============================ Repaso Tema 2b Procesos Unix/Windows ============================
+
+-Creación y gestón de procesos Unix: -Fork
+                                     -Exec
+                                     -Wait
+-Gestión de I/O: -Open
+                 -Read
+                 -Write
+                 -Close
+-Comunicación entre procesos: -Pipe
+                              -DUP
+                              -Select
+                              -Connect
+
+-Creación y gestón de procesos Windows: -CreateProcess->Llamada al sistema para crear un nuevo proceso para ejecutar un programa. Pasos: 1.- Crear e inicializar el bloque de control de procesos (PCB) en el 
+                                                                                                                                         2.- Crear e inicializar un nuevo espacio de direcciones
+                                                                                                                                         3.- Cargar el programa en la memoria
+                                                                                                                                         4.- Copiar argumentos en la memoria del espacio de direcciones
+                                                                                                                                         5.- Inicializar el programa
+                                                                                                                                         6.- Informar al programador de que el nuevo proceso está listo para ejecutarse
+
+-Unix Fork: Crea un nuevo proceso que es una copia del proceso que lo invoca. El proceso hijo es una copia del proceso padre, pero con un PID diferente. El proceso hijo se ejecuta en el mismo espacio de direcciones que el padre. 
+            Pasos: 1.- Crear e inicializar el bloque de control de procesos (PCB) en el kernel.
+                   2.- Crear un nuevo espacio de direcciones
+                   3.- Copiar el espacio de direcciones del proceso padre al proceso hijo
+                   4.- Heredo el contexto de ejecución del proceso padre.
+                   5.- Informar al programador de que el nuevo proceso está listo para ejecutarse.
+
+-Unix Exec: Reemplaza el programa que se está ejecutando en un proceso con un nuevo programa.
+            Pasos: 1.- Cargar el programa en la memoria
+                   2.- Copiar argumentos en la memoria del espacio de direcciones
+                   3.- Inicializar el programa
+
+-Unix Wait: Espera a que un proceso hijo termine su ejecución.
+-Unix Signal: Envía una señal a un proceso.
+
+-Estructura de un Sistema Operativo: - Monolítico: - Utilizado para la mayoría de los SO comerciales (Windows, Linux, MacOS).
+                                                  - La mayor parte de la funcionalidad en el núcleo.
+                                                  - Aunque alguna funcionalidad fuera del kernel (ej. shell,bibliotecas...).
+                                                  - Controladores de dispositivos cargados dinámicamente. Propensos a errores (causan hasta el 90% de los fallos del sistema)
+                                    - Microkernel: - Utilizado para sistemas embebidos.
+                                                  - El núcleo es muy pequeño y solo proporciona servicios básicos.
+                                                  - La mayor parte de la funcionalidad en los procesos de usuario.
+                                                  - Los controladores de dispositivos se ejecutan en el espacio de direcciones del usuario. 
+
+============================ Repaso Tema 2c Concurrencia, Hilos y Condiciones de carrera ============================
+
+-¿Porque se necesita concurrencia? 
+        -Para aprovechar los recursos de los sistemas multiprocesador.
+        -En los servidore se puden tratat de manera concurrente muchas peticiones de los clientes.
+        -Paralelizacion de programas.
+        -Programas con interfaces de usuario interactivas.
+        -Programas que requieren de acceso a dispositivos de E/S.
+ 
+-¿Que es un hilo?
+ -Un hilo es una secuencia de instrucciones que se ejecuta de manera concurrente con otras secuencias de instrucciones.  
+ -Representa una tarea separable y planificada.
+
+-Abstracción por Hilos
+    -Da la ilusión de que el sistema posee procesadores ilimitados.
+    -Los hilos se ejecutan con velocidad variable.
+    -Se necesita un planificador de hilos.
+
+-Operaciones de los hilos 
+    -Thread create: Crea un nuevo hilo.
+    -Thread join: Espera a que un hilo termine su ejecución.
+    -Thread exit: Termina la ejecución de un hilo.
+    -Thread yield: Permite que otro hilo se ejecute.
+
+-Los hilos comparten el espacio de direcciones del proceso, por lo que compraten memoria.
+-TCB: Thread Control Block. Bloque de control de hilos contiene:
+    -Puntero a la pila de hilos
+    -Copia de los registros del procesador(PC, SP, etc)
+    -Metadatos del hilo (ID,prioridad,estado)
+
+-Ciclo de vida de un hilo:
+    -Init: El hilo ha sido creado pero no ha sido planificado. TCB se esta creando. Registros en el TCB.
+    -Ready: El hilo está listo para ser planificado. TCB se ha creado. Registros en el TCB.
+    -Running: El hilo está siendo ejecutado. TCB en la lista de ejecucion. Registros en el Procesador.
+    -Waiting: El hilo está bloqueado esperando a que se cumpla una condición o se ha apartado por el planificador. TCB en la lista variables de sincronización en espera. Registros en el TCB.
+    -Finished: El hilo ha terminado su ejecución. TCB en la lista de terminados. Registros en el TCB.
+
+-Fases del fork: 1.- Crear y reservar memoria para el TCB.
+                 2.- Crear y reservar memoria para la pila del hilo.
+                 3.- Construir el marco para la base de la pila (stub)
+                 4.- Cpiar la funcion a realizar por el hilo y los argumentos en la pila.
+                 5.- Poner el hilo en la lista de listos.
+
+
+============================ Repaso Tema 2d Sincronizacion y acceso a objetos compartidos ============================
+
+-¿Que es la sincronización?
+    -Cuando multiples hilos se ejecutan simultaneamente, es posible que realicen operaciones de lectura y 
+    escritura sobre los mismos objetos, esto crea un comportamiento impredecible del programa.
+    -La sincronización es la técnica que permite que los hilos se ejecuten de manera ordenada y predecible.
+
+-¿Que es una condición de carrera?
+   -Cuando el output de un programa que emplea concurrencia depende del orden de operaciones entre los hilos.
+
+-¿Que es exclusión mutua?
+    -Es la técnica que permite que un hilo acceda a un objeto compartido sin que otro hilo pueda acceder a él.
+-¿Que es un seccion critica?
+    -Es una seccion de codigo que solo un hilo puede ejecutar simultaneamente.
+-¿Que es un lock?
+    -Es un objeto que permite que un hilo acceda a un objeto compartido sin que otro hilo pueda acceder a él.
+    -El lock puede estar libre o ocupado
+    -El lock se puede bloquear o desbloquear.
+    -Como mucho solo un hilo puede poseer un lock.
+    -Si nadie posee el lock, el hilo que lo solicita lo posee.
+
+-Reglas para empleo de locks:
+    -Solo un hilo puede poseer un lock a la vez.
+    -Solo el hilo que posee un lock puede liberarlo.
+    -El lock inicialmente esta libre.
+    -Siempre adquirir el lock antes de acceder al objeto compartido.
+    -Siempre liberar el lock despues de acceder al objeto compartido.
+
+-¿Que es una variable de condición?
+    -Es un objeto que permite a un hilo esperar a que se cumpla una condición.
+    -Se encuentra dentro de una sección crítica
+    -Solo puede ser llamada cundo el hilo posee el lock.
+    -Wait: El hilo se bloquea hasta que se cumpla la condición.
+    -Signal: Desbloquea un hilo que esta esperando a que se cumpla la condición.
+    -Broadcast: Desbloquea todos los hilos que estan esperando a que se cumpla la condición.
+
+-Reglas para empleo de variables de condición:
+    -Solo puede llamarse si se posee el lock.
+    -No tienen memoria, si no hay nadie a la espera no se hace nada.
+    -Wait libera atómicamente el lock y se bloquea hasta que se cumpla la condición.
+
+-Mesa vs Hoare
+    -Mesa: Signal manda al hilo a la cola de listos y el que envia mantiene el lock y la ejecución.
+    -Hoare: Signal entrega el lock y la ejecución al que espera, cuando este termina se devuelven al que la envía.
+
+-Spinlocks:
+    -Es un lock a nicel de procesador, en el que el procesador espera en bucle a que el lock se desbloquee.
+
+-¿Que es un semáforo?
+   -Es un objeto que posee un valor no negativo.
+   -Su operación P espera a que el valor sea mayor que 0 y depues decrementa el valor del semáforo.
+    -Su operación V incrementa el valor del semáforo.
+
+============================ Repaso Tema 2e Sincronizacion Avanzada ============================
+
+
+============================ Repaso Tema 2f Planificación ============================
+

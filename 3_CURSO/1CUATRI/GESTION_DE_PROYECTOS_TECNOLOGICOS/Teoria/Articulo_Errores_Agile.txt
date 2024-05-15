@@ -1,0 +1,113 @@
+Gestión ágil de proyectos: 10 errores que
+hay que evitar
+¿Piensa que la agilidad es todo un bombo, o que no es
+adecuada para usted? Uno de estos obstáculos
+comunes podría ser
+que se interponen entre su organización y los
+beneficios prometidos de la gestión ágil de proyectos
+arriba
+A 6 lectores les gusta esto
+Por Carla Rudder | 10 de octubre de 2019La gestión ágil de proyectos es muy prometedora para los líderes. Aquellos quehan hecho el cambio con éxito en sus organizaciones cantan las alabanzas deAgile, como la capacidad
+ de corregir rápidamente el rumbo, liberar el softwaremás rápido y crear una mayor felicidad.equipos y clientes. Pero si lleva un tiempo trabajando en ello y todavía no velos beneficios prometidos, puede empezar a pensar que 
+ la agilidad es másun bombo que una sustancia, o que no es adecuada para su organización.Piensa en esto: Puede que la culpa no sea de la agilidad, sino de ti.[¿Quiere un manual? Lea La gestión ágil de proyectos, explicada.]
+ ¿Los equipos siguen luchando por colaborar realmente deforma abierta?"Las organizaciones realmente ven lo ágil como una panacea", nos dijorecientemente Melissa Swift, socia principal de clientes de Korn Ferry parasoluciones
+  digitales. "Lo que vemos que ocurre cuando algunasorganizaciones se pasan a la agilidad es que están pidiendo a la gente queopere en un proceso completamente nuevo, y algunas de las cosasfundamentales aún no han cambiado".
+  "Por ejemplo", continúa, "si los líderes siguen operando de forma descendente,si los equipos siguen luchando por colaborar realmente de forma abierta, si nose hareescribir significativamente los trabajos de la gente, 
+  todas esas cosasempujan contra lo ágil. Y todas esas cosas son críticas para el cambiocultural".¿Qué obstáculos frenan la gestión ágil de proyectos en su organización?Hemos pedido a los expertos que compartan algunos de los 
+  errores máscomunes, como la falta de planificación, la falta de flexibilidad y la falta deapoyo ejecutivo. No se trata sólo de deficiencias: El exceso de pruebas, porejemplo, puede plantear problemas.Siga leyendo para conocer 
+  10 errores de gestión de proyectos ágiles que debeevitar.
+
+1. Tratando de hervir el océano
+
+"Es un error intentar convertir todo en un sprint ágil o microgestionar cada
+sprint. La idea de los sprints ágiles es permitir que pequeños grupos ideen y
+desarrollen mientras el PM comprueba y se asegura de que todo el mundo está
+en la tarea. Confía en ellos. Haz que los PMs se certifiquen si tienes tiempo.
+No intentes hervir el océano. Confíe en su personal altamente cualificado y
+experimentado. Otro obstáculo puede ser confiar demasiado en el proceso y no
+tener suficientes puntos de contacto o revisión de la calidad del producto final".
+- Shayne Sherman, director general de TechLoris
+
+2. Resistencia al cambio cultural
+"El mayor reto u obstáculo para el equipo de datos es la cultura. Durantedemasiado tiempo, los equipos de datos no han tenido que consultar con otros.Se veían a sí mismos y eran tratados por la dirección como insulares, 
+nosujetos a las exigencias de la empresa. Esto ya no es así. Cambiar la culturaen torno a los equipos de servicios de datos será el mayor reto. Los bucles deretroalimentación y las autopsias sin culpa beneficiarían a los
+ equipos deservicios de datos, pero son muy diferentes de cómo hacen su trabajo hoy endía."Una de las señas de identidad de la agilidad es centrarsemás en el proceso y menos en las herramientas"."Una de las características 
+ de la agilidad es centrarse más en el proceso ymenos en las herramientas. Es una idea difícil para los profesionales de lasbases de datos. Además, la flexibilidad y la agilidad no son precisamentepalabras que se utilicen para 
+ describir a la mayoría de los equipos de bases dedatos. Pero eso tiene que cambiar ahora. Cuando otras partes de laorganización adoptan la agilidad, se ejerce una inmensa presión sobre losequipos de bases de datos. La página 
+ webEl equipo de datos debe responder, o corre el riesgo de volverse irrelevante yralentizar al resto de la empresa". - Robert Reeves, CTO de Datical
+
+3. No hay suficiente planificación del equipo
+ "Un obstáculo a la hora de implantar la agilidad a nivel de equipo es subestimar el nivel de esfuerzo y planificación necesario para poner en marcha un proyecto ágil. Demasiadas organizaciones planifican su estrategia ágil,
+ pero se olvidan de la planificación táctica en profundidad. El maestro de scrum y el propietario del producto son funciones fundamentales y deben ser ocupadas por recursos experimentados. "En primer lugar, es importante formar 
+ un equipo multifuncional con todas las habilidades necesarias para ofrecer algo de valor. Se espera que los equipos ágiles trabajen de forma independiente, sin los traspasos que cuestan tiempo y calidad en los proyectos 
+ tradicionales. "En segundo lugar, el scrum master y el propietario del producto son funciones críticas y deben ser ocupadas por recursos experimentados. Una clase de dos días no proporciona a alguien las habilidades y la 
+ experiencia necesarias para desempeñar estas funciones. El scrum master necesita la experiencia para ayudar al equipo a construir y madurar sus prácticas. También necesita la seriedad para influir en el liderazgo y resolver 
+ los bloqueos sistémicos. El propietario del producto debe tener la capacidad de construir la visión, priorizar el trabajo para cumplirla, las habilidades políticas para defenderla, junto con un buen conocimiento práctico del
+ producto. "Por último, hay que trabajar en la logística para que el equipo tenga éxito desde el principio. ¿Tiene el equipo un buen espacio de trabajo? ¿Apoya la infraestructura la entrega continua de valor cada dos semanas? 
+Sin esta planificación esencial, los equipos ágiles se quedarán cortos". - Alan Zucker, director fundador de Project Management Essentials
+[ ¿Qué herramientas pueden ayudar? Lea también: Las 7 mejores herramientas de gestión de proyectos de código abierto para equipos ágiles. ]
+
+4. Demasiada poca flexibilidad
+
+"Los proyectos ágiles suelen fracasar por la rigidez de las prácticas de
+contratación. Una gran organización designa a un proveedor para que realice un
+proyecto ágil, pero con un contrato que le ata a unos resultados fijos. Esto es
+contrario a la agilidad, que se basa en que el equipo sea capaz de adaptarse y
+responder a los cambios, ya sea en los requisitos del cliente o en las tecnologías
+disponibles. Los contratos más flexibles dan mejores resultados, con un
+resultado fijo que proporcione una dirección clara de viaje, pero con una
+disposición para revisar el progreso sobre una base ad hoc". - Jim
+Berrisford, director de operaciones de Step5
+5. Falta de apoyo de la cúpula directiva
+"Surge un problema o una petición urgente y todos se ven
+obligados a dispersarse como hormigas".
+"Con demasiada frecuencia, la dirección no entiende o no se preocupa por las
+limitaciones que exige la agilidad. Surge un problema o una petición urgente y
+todo el mundo se ve obligado a dispersarse como hormigas para reorientar su
+atención antes de volver horas o incluso días después. La dirección está
+matando el flujo del proyecto y restando importancia al proyecto. Si el trabajo
+inesperado es un mal necesario, hay que presupuestar un bloque razonable en
+la capacidad para hacer frente a los imprevistos". - Mark Runyon, consultor
+principal de Improving
+6. Historias de usuario incompletas
+"A menudo, cuando los equipos se sientan a completar las estimaciones para
+los próximos sprints, las historias de usuario están incompletas. El resultado es
+la incapacidad de estimar adecuadamente, la probabilidad de que el alcance
+se desborde y la incapacidad de entregar lo que se planificó originalmente
+para el sprint. Los requisitos incompletos requieren largas idas y venidas entre
+los equipos de ingeniería y de producto, lo que ralentiza el proceso de entrega.
+Antes de las sesiones de estimación y de comprometer el trabajo en un sprint,
+es esencial tener los requisitos completos". - Holly Knoll, coach empresarial y
+creadora de The Consultant Code
+
+7. Demasiadas pruebas
+
+Los engranajes se atascan cuando se empieza a probar condemasiados casos límite y configuraciones imaginables."Cuando se desarrolla software de forma ágil, es fundamental realizar undesarrollo orientado a las pruebas
+y probar cada función antes de incorporarla ala base de código principal. Las pruebas unitarias y el CI/CD permiten alcanzarla máxima velocidad en un proyecto yasegurarse de que su desarrollo ágil se mueve como una máquina 
+bienengrasada. Con esto en mente, es increíblemente importante encontrar elequilibrio adecuado cuando se trata de la garantía de calidad/control decalidad y las pruebas de aceptación."Hemos visto, a pesar de las mejores
+intenciones, que los engranajes seatascan cuando se empieza a probar con demasiados casos límite yconfiguraciones imaginables. Es posible hacer demasiadas pruebas."Especialmente en el desarrollo de aplicaciones de nueva creación,
+hay queasegurarse de realizar una buena cantidad de pruebas, pero también hay quemantener a los ingenieros avanzando en las características. Lo último que sequiere es llegar al final de un proyecto y tener una enorme acumulación
+deerrores que corregir, pero también hay que llegar a la meta. Es muy probableque, si tienes una estrategia de lanzamiento y un plan de puesta en marcha enel que sólo empiezas con unos pocos usuarios o grupos, tengas tiempo 
+parahacer los pequeños ajustes para todos los casos extremos. Mantén tudesarrollo en el buen camino poniendo en marcha un plan de pruebassaludable, no demasiado, pero tampoco demasiado".- Ben Wald, cofundador, Very 
+    
+8. La seguridad no es lo mismo
+
+"Cuando dedicas el menor tiempo y esfuerzo posible a la seguridad, parecebastante fácil. Cuando eres realmente bueno en ello y está totalmente integrado,es sofisticado y sin problemas.
+Sin embargo, en las etapas intermedias, en lasque se han identificado las mejoras que hay que hacer, se han encontradolagunas, pero aún no se han creado soluciones ni se han modificado losprocesos para adaptarlos a las prácticas
+de seguridad, puede haber muchafricción e incluso la sensación de que las cosas están empeorando. Es elclásico efecto Dunning-Kruger, que también aparece en la evolución de laseguridad."A la hora de invertir en seguridad, 
+hay que reconocer el progreso por encimade la perfección. A menudo son las cosas sencillas las que tienen un granimpacto. Una vez que se hayan solucionado, pase a trabajar en colaboracióncon los equipos de seguridad y de entrega.
+Al final, debería ser más difícilsaltarse la práctica y el flujo de la seguridad que hacer continuamente locorrecto. La seguridad en el sistema de entrega genera confianza y ayuda aavanzar rápidamente,
+ y eso es lo que todo el mundo busca". - MichaelStahnke, vicepresidentede ingeniería de plataformas en CircleCI, supervisando SRE, seguridad yherramientas
+
+9. Barreras entre equipos
+
+"Lo ideal es que los equipos estén en la misma sala cuando puedan estarlo, conmucho espacio para separarse para la comunicación formal e informal. Debe haber muchas pizarras blancas para trabajar en los problemas y diseñar
+soluciones."Los miembros del equipo deben centrarse en su parte del proyecto. Si prestanapoyo a proyectos anteriores y hacen malabarismos con otros proyectos, raravez se consigue un equipo ágil de éxito. 
+El enfoque, la comunicación y lacoordinación se resienten cuando los miembros del equipo se extienden pordiferentes proyectos. Básicamente, hay que eliminar todas las barreras que seinterponen entre los compañeros de equipo
+ y su éxito". - Mark Runyon,consultor principal de Improving10. No saber cuándo se ha terminado"En nuestra vida laboral diaria, trabajamos hacia la primera definición de"hecho", pero ¿cómo sabemos que hemos llegado al final?
+  Un ingeniero le diráque siempre haymás mejoras que se pueden hacer, y un propietario del producto le dirá quesiempre habrá más características que se puedan añadir. 
+  Para que unproyecto tenga éxito, el final -ese esquivo "hecho"- es algo que todos losmiembros del equipo deben definir, comunicar y acordar.
+
+  10. No saber cuándo se ha terminado 
+  
+"En nuestra vida laboral diaria, trabajamos hacia la primera definición de"hecho", pero ¿cómo sabemos que hemos llegado al final? Un ingeniero le dirá que siempre hay

@@ -1,0 +1,246 @@
+========================================================Index:====================================================================================================
+Storage Devices
+Introduction to Filesystems
+Software layers for I/O
+Files and Directories
+Access 
+File System Reliability
+===================================================================================================================================================================
+======================================================Storage Devices:=============================================================================================
+Magnetic Disks:
+    -Storage rareley becomes corrupted 
+    -Large capacity low cost 
+    -Slow access time
+    -Block level random access 
+    -Better performance for streaming access
+    -Formed by sectors and platters (Sectores y pistas), separadas por egiones de seguridad
+    -Sectors are the smallest unit of data that can be read or written to the disk
+    -Platters are the disks that store the data
+    -Tracks are the concentric circles on the platter
+    -The head is the part of the disk that reads and writes the data
+    -The arm is the part of the disk that moves the head to the correct track
+    -The spindle is the part of the disk that spins the platter
+    -Sectors on the edge have a greater bandwidth than those in the center, there are more sectors in the outer part of the platter than in the inner part
+    -The outer part of the platter is faster than the inner part
+    -In case of sector corruption, there are error correction codes. Also sectors on the inner part of the platter are used as backup for the outer part.
+    -Sector sparing is the algorithm of using the inner part of the platter as backup for the outer part
+    -Slip sparing is de algorithm that maps all the sectors around a corrupted one to a different location to check the error and aplies a ECC to the corrupted one.
+    -Track skewing is the process of moving the head to the fetch the next track and spinning the platter to the fetch the start of sector
+    -Disk Performance:
+        -Disk latency: Seek time + Rotation time + Transfer time
+        -Seek time: Time to move the head to the correct track(1-20ms)
+            -Fine-grained seek: Head moves to the correct track
+            -Head switch time:
+        -Rotation time: Time to spin the platter to the correct sector
+        -Transfer time: Time to read or write the data
+    =================================================Ejercicio:=============================================================================================
+    How long to complete 500 random disk reads in FIFO order?
+    -Seek time: 10.5ms
+    -Rotation time: 4.15ms
+    -Transfer time: 5-10us
+    500*(10.5+4.15+0.01)/1000= 7.3s
+    =========================================================================================================================================================
+    =================================================Ejercicio:=============================================================================================
+    How long to complete 500 random disk reads in sequential order?
+    -Seek time: 10.5ms
+    -Rotation time: 4.15ms
+    -Transfer time: 500 sectors *512 bytes / 128 MB/s = 0.2s
+    (10.5+4.15+2)= 16.65ms
+    =========================================================================================================================================================
+
+    -Disk Scheduling:
+        -FIFO: First in first out
+        -SSTF: Shortest seek time first, if there are two concurrent access to a sector, the one that has data closer to the sector is selected
+        -SCAN: Start at one end of the disk and move to the other end towards the center, once reached the center the disk spins,disk level algorithm, also called elevator algorithm
+        -C-SCAN: SCAN but the head moves to the other end of the disk and starts again
+        -LOOK: SCAN but the head moves only to the tracks that have pending requests
+        -C-LOOK: LOOK but the head moves to the other end of the disk and starts again
+        -FLOOK: LOOK but the head moves only to the tracks that have pending requests and the disk spins
+    =================================================Ejercicio:=============================================================================================
+    Disk capacity : 320 GB
+    Disk bandwidth :54-128MB/s
+    Transfer time = 320GB/(54+128)/2 = 3500s = 58min
+    =========================================================================================================================================================
+
+Flash Memory:
+    -Small capacity high cost
+    -Can't write directly to cell, must be "clean" before writing
+        -Large block erasure required before writing
+        -Erasure Block : 128KB-512KB
+        -Erasure time: several ms
+    -Write/Read Page (2-4KB):50-100us
+    -Random write: 2000s
+    -Random read: 38500s
+    -Flash translation layer: 
+        -Page mapping: Logical to physical page mapping
+        -Block mapping: Logical to physical block mapping
+        -Garbage collection: Move data from full blocks to empty blocks
+        -Wear leveling: Only write each physical page a limited number of times
+        -Remap pages that no longer work 
+        -Transparent to the device user
+    -Fast access time
+    -Capacity at intermediate cost
+    -Block level random access
+    -Good performance for read,worst for random write
+======================================================================Introduction to Filesystems===================================================================================
+-Persistence of data stored in filesystems
+    -Even if crash happens during update
+    -Even if disk block becomes corrupted
+    -Even if flash memory wears out
+
+-Naming of files and directories
+    -Named data instead of disk block numbers
+    -Directories instead of flat Storage
+    -Hierarchical structure
+    -Byte addressable data even though blocks are not
+-Performance
+-Controlled access to shared data
+-File system workloads: File are normally small sized, large files accounts for most of the total storage 
+-File access mostly to small files 
+-File access mostly to sequential data
+-Some files are read/written randomly
+-File system design: 
+    -Small files:
+        -Small blocks for storage efficiency
+        -Concurrent operations more efficient than sequential
+        -Files used together should be stored together
+    -Large files:
+        -Storage efficient (large blocks)
+        -Contigous allocation for sequential access
+        -Efficient lookup for random Access
+-Directory: Group of files or directories
+-Path: Sequence of directory names that leads to a file or directory
+-Links:
+    -Hard link: Link from name to metadata location
+    -Soft link: link from name to alternate name
+-Mount: Attach a file system to a directory, mapping from name in one filesystem to another 
+
+-File system metadata: 
+    -File name
+    -File size
+    -File type
+    -File permissions
+    -File owner
+    -File creation time
+    -File modification time
+    -File access time
+    -File location
+    -File data
+    -File links
+    -File system metadata
+-Design Challenges:
+    -Index structure: How do we locate the blocks of a file
+    -Index granularity: What block size do we use
+    -Free Space: How do we find free blocks 
+    -Locality: How do we preserve spatial locality
+    -Reliability: How do we ensure data is not corrupted
+
+======================================================================Filesystem Options===================================================================================
+ -Types:
+    -FAT: File allocation table, uses a linked list
+        -Granularity: block
+        -Free space allocation: FAT array
+        -Locality: defragmentation
+        -Linked list index structure
+        -File table:
+            -Linear map of all blocks on disk
+            -Each file has a linked list of blocks 
+            -MFT: Master file table, Referencia de todos los bloques de un archivo
+            -Pros:
+                -Easy to find free blocks
+                -Easy to append files
+                -Easy to delete files
+            -Cons:
+                -Small file access is low 
+                -Random access is very low 
+                -Fragmentation:
+                    -Files block for a given file are scattered 
+                    -Files in the same directory may be scattered
+                    -Problems become worse as the disk fills up
+    
+    -FFS: Fast file system, uses a fixed tree
+        -Granularity: block
+        -Free space allocation: bitmap fixed location
+        -Locality: block groups and reserved space
+        -Asymetric tree: 
+            -Small files->Shallow tree
+            -Large files->Deep tree
+            -Sparse files->Only fill pointers if needesd
+        FFS Locality: 
+            -Block groups: 
+                -Group of blocks that are allocated together
+                -Files in the same directory are grouped together
+                -Subdirectories located in different block groups
+            -Inode table spread throughout disk
+            -First fit allocation: Small files fragmented, large files contiguous
+
+
+        -Inode table: Analogue to FAT table, Inodes are transparent to user
+            -Metadata: File name, size, type, permissions, owner, creation time, modification time, access time, location, data, links, file system metadata
+            -Set of 12 direct pointers to data blocks
+            -Blocks of 4KB -> 12*4KB = 48KB max size files
+            -Doubly indirect pointer to data blocks->Dos niveles de profundidad
+            -Triply indirect pointer to data blocks->Tres niveles de profundidad
+        -Pros:
+            -Efficient storage for small and large files
+            -Locality for small and large files
+            -Locality for metadata and data
+        -Cons:
+            -Inneficient for tiny files
+            -Inneficient encoding when file is mostly contiguous on disk
+            -Need to reserve 10-20% of free space to prevent fragmentation
+
+    -NTFS: New technology file system, uses a B+ tree dynamic
+        -Granularity: extent
+        -Free space allocation: bitmap file
+        -Locality: extent groups best fit defrag
+        -Master File Table:
+            -Flexible 1KB storage for metadata and data
+            -Resident data is stored in the MFT
+        -Extents:
+    -EXT: Extended file system
+    -EXT2: Second version of extended file system
+    -B trees: B- trees are a generalization of binary search trees in that a node can have more than two children. Unlike self-balancing binary search trees, 
+          the B-tree is optimized for systems that read and write large blocks of data. It is commonly used in databases and file systems.
+
+-Transaction : Group of operations, must be atomic, consistent, isolated, durable, this means that operations appear to happen as agroup, operations that complete must stay completed
+            , other operations do  not see the results of the transaction until it is complete,and due to consistency they must follow a sequential memory model
+-FAT Append data to file: 1 Add data to block, 2 add data pointer to block, 3 update file tail to point new MFT entry, 4 update access time to head of file
+-Recuperacón de un archivo en FAT: Seguimiento de punteros
+-FFS Create file: 1 Allocate inode, 2 Allocate data blocks,3 write data block, 3 Write inode block, 4 Update bitmap of free blocks, 5 Update directory with file name, 6 Update access time for directory
+-Recuperación de un archivo en FFS: 1 Scan inode table, 2 if any unlinked files delete them, 3 Compare free block bitmap against inode trees, 4 Scan directories dor missing update/access times
+-FFS Move file: 1 rm -rf file, 2 mv file directory
+-Application level: 1 Write name of each open file to app folder ,2 Write changes to backup file, 3 Rename backup file to be a file, 4 Delete old version
+
+-RAID 0: Striping, no redundancy, no fault tolerance, no recovery, no performance gain
+-RAID 1: Mirroring, 2 copies of data, critical information
+-RAID 5: Striping with parity, parity stored diagonally
+-RAID 5 Update : 1 Read old data block, 2 Read old parity block , 3 Write new data block,4 Write new parity block
+ 
+
+
+
+
+
+
+
+
+
+                 ▄█▄
+                ▄███▄
+               ▄█████▄
+              ▄███████▄
+             ▄ ▀▀██████▄
+            ▄██▄▄ ▀█████▄
+           ▄█████████████▄
+          ▄███████████████▄
+         ▄█████████████████▄
+        ▄███████████████████▄
+       ▄█████████▀▀▀▀████████▄
+      ▄████████▀      ▀███████▄
+     ▄█████████        ████▀▀██▄
+    ▄██████████        █████▄▄▄
+   ▄██████████▀        ▀█████████▄
+  ▄██████▀▀▀              ▀▀██████▄
+ ▄███▀▀                       ▀▀███▄
+▄▀▀                               ▀▀▄

@@ -1,0 +1,5 @@
+DSPIC33FJ32MC204
+
+-Interrupciones: 
+    -Resetear la flag de interrupción cuando se modificamos la condicion que ha hecho entrar a la interrupción
+ 

@@ -1,0 +1,61 @@
+<html>
+<link rel="stylesheet" href="styles.css">
+    <head>
+        <title>Get Characters</title>
+    <body>
+        <h1>Busca Personaje API Rick y Morty</h1>
+            <input type="text" id="input1" placeholder="Introduce Personaje">
+           <button id="search">Buscar</button>
+    </body>
+    <script>
+        let aliveCheck = undefined;
+        buttonSearch = document.getElementById('search');
+        buttonSearch.onclick = function() {
+            let string = document.getElementById('input1').value;
+           fetch('https://rickandmortyapi.com/api/character/?name='+string)
+            .then(response => response.json())
+            .then(data => {
+                let results = data.results;
+                let characters = results.map(character => {
+                    return {
+                        id: character.id,
+                        name: character.name,
+                        status: character.status,
+                        species: character.species,
+                        gender : character.gender,
+                        origin: character.origin,
+                        location: character.location,
+                        image: character.image,
+                        episode: character.episode,
+                        url: character.url,
+                        created: character.created  
+        };
+    });
+    characters.forEach(character => {
+        //create a div called result for each character
+        let result = document.createElement('div');
+        result.id = 'characters';
+        if(character.status == 'Alive'){
+            aliveCheck = 'green';
+        }else if(character.status == 'Dead'){
+            aliveCheck = 'red';
+        }else{
+            aliveCheck = 'grey';
+        }
+        result.innerHTML = `<h2>${character.name}</h2>
+        <p>Status: <span style="color:${aliveCheck}">${character.status}</span></p>
+        <p>Species: ${character.species}</p>
+        <p>Geender: ${character.gender}</p>
+        <p>Origin: ${character.origin.name}</p>
+        <p>Location: ${character.location.name}</p>
+        <img marign="1000px" src="${character.image}">
+        <a id="eps"href="${character.episode}">Episodes</a>
+        <a id="url"href="${character.url}">URL</a>
+        <p>Created: ${character.created}</p>
+        `;
+        document.body.appendChild(result);
+    });
+    });
+}
+    </script>
+</html>

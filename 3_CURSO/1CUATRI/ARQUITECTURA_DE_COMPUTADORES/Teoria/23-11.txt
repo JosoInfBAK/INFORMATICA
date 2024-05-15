@@ -1,0 +1,198 @@
+Ejercicio 1: 
+Datos:
+for (i = 0; i < 300; i++) {
+ c_re[i] = (a_re[i] * b_re[i]) – (a_im[i] * b_im[i]);
+ c_im[i] = (a_re[i] * b_im[i]) + (a_im[i] * b_re[i]);
+}
+Codigo en ensamblador:  vld,vld,vmul,vld,vld,vmul,vsub,vst,vmul,vmul,vadd,vst
+
+--------------------------Apartado a)--------------------------
+FLOPS = 6 
+Loads = 4
+Stores = 2
+Loads/Stores = 6
+Bytes leidos = 4 * 6 = 24 Bytes
+Intensidad Aritmetica = 6/24 = 0.25
+
+--------------------------Apartado c)--------------------------
+Convoy 1 : vld
+Convoy 2 : vld,vmul
+Convoy 3 : vld
+Convoy 4 : vld,vmul,vsub
+Convoy 5 : vst,vmul
+Convoy 6 : vmul,vadd,vst
+
+--------------------------Apartado e)--------------------------
+Unidades de acceso a memoria = 3
+Convoy 1 : vld,vld,vmul,vld
+Convoy 2 : vld,vmul,vsub,vst
+Convoy 3 : vmul
+Convoy 4 : vmul,vadd,vst
+
+Ejercicio 2:
+
+Datos:
+Codigo vectorial con una parte escalar.
+
+Parte escalar -> 400ms
+La parte vectorial tiene 200 MB de entrada y 100 MB de salida.
+Procesador vectorial ancho de banda de 30 GB/s.
+Procesador híbrido ancho de banda de 150 GB/s. 10 GBS/s de DMA.: HOST + GPU.
+
+200 MB -> 0.2 GB
+100 MB -> 0.1 GB
+-----------------Procesador vectorial------------------
+(0.2+0.1)/30 = 0.01 -> 10 ms
+
+Tejecucion vectorial = 400 ms + 10 ms = 410 ms
+
+-----------------Procesador hibrido------------------
+(0.2+0.1)/150 = 0.001 -> 2 ms de acceso a memoria
+(0.2+0.1)/10 = 0.03 -> 30 ms de DMA (Transferencia de datos)
+Tejecucion hibrido = 400 ms + 2 ms + 30 ms = 431 ms
+
+Ejercicio 3:
+
+Datos:
+GPU con 10 procesadores SIMD.
+Cada instruccion SIMD tiene un ancho de 32 bits.
+Produce 32 resultados cada 4 ciclos.
+Cada procesador SIMD tiene 8 líneas de aritmética y para carga/almacenamiento.
+
+Programa con saltos divergentes que causa de media un 80% de los threads activos.
+Considerar que el 70% de las instrucciones son aritméticas y el 30% de las instrucciones son de carga/almacenamiento.
+Tasa media de emisión SIMD 0.85.
+Frecuencia GPU 1.5 GHz.
+
+------------------Throughput en GFLOPS------------------
+0.85 * 70% * 80% threads activos * 8 resultados por ciclo * 10 procesadores * 1.5 GHz = 57.12 GFLOPS
+
+------------------Incrementar el n de lineas a 16--------------------
+0.85 * 70% * 80% threads activos * 16 resultados por ciclo * 10 procesadores * 1.5 GHz = 114.24 GFLOPS
+Speedup = 114.24/57.12 = 2
+
+------------------Incrementar el n de procesadores a 15 --------------------
+0.85 * 70% * 80% threads activos * 8 resultados por ciclo * 15 procesadores * 1.5 GHz = 85.68 GFLOPS
+Speedup = 85.68/57.12 = 1.5
+
+------------------Añadir caché incrementa tasa a 0.95----------------------
+0.95 * 70% * 80% threads activos * 8 resultados por ciclo * 10 procesadores * 1.5 GHz = 61.44 GFLOPS
+Speedup = 61.44/57.12 = 1.07
+
+Ejercicio 4:
+
+Datos:
+GPU con 16 procesadores SIMD.
+GPU con 1.5 GHz.
+Cada procesadores SIMD con 16 unidades en punto flotante.
+100 Gb de ancho de banda de memoria off-chip.
+
+--------------------------Throughput Pico en GFLOPS--------------------------
+16 procesadores SIMD * 16 unidades en punto flotante * 1.5 GHz = 384 GFLOPS
+
+Cada operacion en punto flotante tiene 2 load y 1 store.
+2 operandos de 32 bits y un resultado de 32 bits.
+Cada operacion en punto flotante tiene 2 operandos de 32 bits y un resultado de 32 bits.
+Son 12 Bytes por flop.
+12 Bytes por flop * 384 GFLOPS = 4608 GB/s
+No es sostenible ya que se requieren 4,6 TB de ancho de banda de memoria y solo hay 100 GB/s.
+
+Ejercicio 5:
+
+Datos:
+
+for (int x = 0; x < NX - 1; x++){
+ for (int y = 0; y < NY - 1; y++){
+ for (int z = 0; z < NZ - 1; z++){
+ int index = x * NY * NZ + y * NZ + z;
+ if (y > 0 && x > 0){
+ material = IDx[index];
+ dH1 = (Hz[index] – Hz[index – incrementY] / dy[y];
+ dH2 = (Hy[index] – Hy[index – incrementZ] / dz[z];
+ Ex[index] = Ca[material] * Ex[index] + Cb[material] * (dH2 - dH1);
+ }
+ }
+ }
+}
+
+dH1,dH2,Hy,Hz,dy,dz,Ca,Cb son valores en punto flotante de precision simple.
+Ex es un array de enteros de 32 bits.
+IDx es un array de enteros de 32 bits.
+NX,NY,NZ son enteros de 32 bits.
+incrementY,incrementZ son enteros de 32 bits.
+Procesador con ancho de banda de 30 GB/s.
+
+------------------------------Intensidad Aritmética --------------------------------
+FLOPS = 8 (Number of operations)
+Loads = 9 (Number of loads lo que accede a cada array)
+Stores = 1 (Number of stores lo que se guarga a cada array)
+Loads/Stores = 9+1 = 10
+Bytes leidos = 10 * 4 = 40 Bytes
+Intensidad aritmética = 8/40 = 0.2
+-----------------------------Rendimiento limitado por ancho de banda-----------------------------
+Rendimiento = 0.2 * 30 GB/s = 6 GFLOPS
+Ancho de banda = 30Gb/s
+Si elmrendimiento pico es superior a 6 GFLOPS entonces el ancho de banda es el limitante si no entonces el limitante es el rendimiento picos
+
+   |
+   |
+30 |-------------------------------|
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+ 6 |------------|                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |____________|__________________|___________________________________________________
+                0.2                1
+
+
+
+------------------------------Modelo roofline con 85 GFLOPS--------------------------------
+Rendimiento = 85 GFLOPS
+Ancho de banda = 30 GB/s
+Intensidad Aritmetica = 85 GFLOPS / 30 GB/s = 2.83
+Intensidad aritmetica para 30 GB/s = 1
+
+   |
+   |
+85 |-------------------------------|
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+   |                               |
+30 |------------|                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |            |                  |
+   |____________|__________________|___________________________________________________
+
+
+
+
+
+88                              88  
+""              ,d              88  
+                88              88  
+88 8b,dPPYba, MM88MMM ,adPPYba, 88  
+88 88P'   `"8a  88   a8P_____88 88  
+88 88       88  88   8PP""""""" 88  
+88 88       88  88,  "8b,   ,aa 88  
+88 88       88  "Y888 `"Ybbd8"' 88  
+                1                2.83
+
+

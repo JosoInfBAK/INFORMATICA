@@ -1,0 +1,144 @@
+Indica y razona si las siguientes acciones se han de realizar en modo núcleo:
+a) Inhibir interrupciones.
+   - Si, porque el modo núcleo es el que tiene privilegios de acceso a los recursos del sistema. Y al ser el encargado de gestionar los cambios de contexto generados por estas debe hacerse con privilegios máximos.
+b) Modificar los registros del microprocesador.
+    - Si, porque el modo núcleo es el encargado de gestionar los cambios de contexto, por lo que debe tener acceso a los registros del microprocesador para poder realizar dichos cambios.
+c) Realizar una llamada al sistema.
+    - Si, porque el modo núcleo es el encargado de gestionar los permisos que un usuario puede tener a la hora de ejecutar dicha llamada al sistema, por lo que es el único capaz de comprobar esos permisos y garantizarlos en caso afirmativo.
+d) Procesar una señal recibida.
+    - Nivel de usuario ok
+
+e) Modificar la memoria asignada al programa
+    - Modo kernel 
+
+2. ¿Es posible cambiar entre procesos en un sistema monousuario? 
+    - Si, porque el sistema monousuario es aquel que solo tiene un usuario, pero este puede tener varios procesos en ejecución, por lo que es posible cambiar entre procesos. En caso de que el sistema operativo no sea
+      monotarea, es decir, que pueda ejecutar varios procesos a la vez.
+
+3. Dispones de un sistema multitarea sin memoria virtual y con una memoria principal de
+24MB. El SSOO ocupa 5MB y cada proceso 3MB. Calcula el número de procesos que
+pueden estar activos en el sistema. ¿Habría memoria desperdiciada en este caso? 
+
+    - El sistema operativo ocupa 5MB, por lo que la memoria disponible para los procesos es de 19MB. Cada proceso ocupa 3MB, por lo que podemos tener 6 procesos activos en el sistema, se desperdicia 1 MB de memoria.
+
+4. ¿Qué se encuentra almacenada en la tabla de vectores de interrupción?
+a) El nombre de la rutina de tratamiento (manejador).
+b) La dirección de la rutina de tratamiento. ----------------------------Esta------------------------------------
+c) El número de la interrupción.
+d) El nombre de la tarea del SSOO que trata la interrupción. 
+
+5. ¿Qué código se ejecuta con interrupciones inhibidas?
+a) Ninguno, ya que podrían perderse interrupciones.
+b) Todo el código del SSOO.
+c) Ciertas partes críticas del código del SSOO. ----------------------------Esta------------------------------------
+d) Los procesos del usuario administrador de sistema de máxima prioridad. 
+
+El sistema operativo Unix, para cada archivo, define la protección de este a través de permisos
+a su propietario, a un grupo al que se encuentra asignado y al resto de usuarios en ese orden.
+Se asignan bits a permisos read-write-execute rwx (Ej. 111 seria permiso para todo).
+
+6. Un archivo de Andrés (uid = 6) y con gid=1, tiene permisos rwxr-x---. El usuario Martín
+(uid=3) y gid=1 quiere ejecutarlo. ¿Sería posible? ¿Qué permisos habría que cambiar
+para que lo pudiera ejecutar cualquier usuario? 
+
+rwxr-x-x- Tendría que ser 7 5 1
+
+7. La instrucción chmod cambia los bits de protección de un fichero definiendo, mediante
+un entero de 0 a 7 la protección concreta de usuario, grupo y todos. ¿A qué enteros
+corresponde la protección r-x---x---? ¿Qué permisos proporcionaría un “chmod 755”?
+
+r-x---x--- Es 5 1 0
+755 Permisos completos al propietario, para el grupo, y al resto de usuarios de lectura y ejecución.
+
+8. Un directorio contiene los siguientes archivos:
+Archivo Propietario Grupo Permisos
+programa_1 luis alumnos rwx--x---
+programa_2 luis alumnos rw-rw-r--
+
+El programa programa_1 tiene que escribir y leer del fichero respuestas:
+a) ¿Qué ocurre si el usuario alfonso intenta ejecutar el fichero programa1?
+    - Si alfonso pertenece al grupo alumnos podría ejecutar el programa, 
+b) Investiga acerca de los bits setuid, setgid y sticky bit, cómo se utilizan y para qué
+    sirven.
+    - El bit setuid permite que un usuario ejecute un programa como si fuera el propietario del mismo, el bit setgid permite que un usuario ejecute un programa como si fuera del grupo propietario del mismo, 
+    y el bit sticky bit permite que un usuario pueda borrar un archivo si es el propietario del mismo o si es el propietario del directorio que lo contiene, pero evita que un usuario pueda borrar un archivo que no es suyo
+     si no es el propietario del directorio que lo contiene.
+
+9. Un proceso en UNIX ejecuta fork y luego exec para generar un proceso hijo. Si el
+proceso hijo finaliza y el proceso padre no está a la espera de su resultado, ¿qué
+ocurre con el proceso hijo? Investiga qué es un proceso Zombi. 
+    
+        - El proceso hijo se convierte en un proceso zombi, es decir, un proceso que ha finalizado pero que todavía tiene un registro en la tabla de procesos, por lo que el proceso padre debe esperar a que el proceso hijo
+        finalice para poder liberar el registro de la tabla de procesos.
+
+10. En el PCB de un proceso se almacena la información de qué proceso es el que lo creó.
+Investiga qué pasa si dicho proceso padre finaliza antes. 
+    
+        - El proceso padre se convierte en un proceso huérfano, es decir, un proceso que ha finalizado pero que todavía tiene un registro en la tabla de procesos, por lo que el proceso padre debe esperar a que el proceso padre
+        finalice para poder liberar el registro de la tabla de procesos. Si no se toman medidas especiales, los procesos huérfanos seguirán ejecutándose hasta que finalicen por sí mismos o hasta que el sistema operativo los termine.
+
+11. Cuáles de los siguientes atributos son compartidos entre todos los hilos de un proceso:
+a) Pila de ejecución. ----------------------------------Esta------------------------------------
+b) Estado de ejecución (Ready, Running...). ----------------------------Esta------------------------------------
+c) Contexto de ejecución donde se salva la información del procesador. ----------------------------Esta------------------------------------
+d) Código ejecutable. ----------------------------Esta No, ya que a cada hilo se le asigna unicamente una porcion del codigo------------------------------------
+e) Ninguno. 
+
+12. Cuando se crea un nuevo thread, este tiene acceso a:
+a) Una copia del segmento de datos del proceso.
+b) No tiene acceso al segmento de datos del proceso.
+c) El segmento de datos del proceso. ----------------------------Esta, ya que al ser un hilo, debe tener acceso a todas las variables y datos originales y no a una copia de estas---------------
+d) Dicho segmento, pero marcándolo previamente como copy-on-write. 
+
+13. ¿Se produce siempre un cambio de contexto cuando hay un cambio de proceso?
+    
+    - Si, ya que tiene que guardarse atómicamente todoe l contexto del proceso que estaba ejecutando y cargar el contexto del proceso que va a ejecutar, para si no perder datos y poder reanudar la ejecución 
+     cuando corresponda.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Ejercicios Planificadores 1:
+
+Tarea | Llegada | T_CPU                | Prioridad              CPU  |  t1 (E5)  |  t3(E5)  |  t1(E1)  |  t3(E12) |  t5(E3)  |  t4(E6)  | t2(E3)  | t6(E5)  |  
+t1    | 0       | 6                    | 0                           0           5          10         11   |     18         21         27        30         35
+t2    |0'1      | 3cpu/10io/2cpu       | 3                                                     4 del anterior y 5 del suyo, pero solo necesita 3
+t3    |0'7      | 12                   | 0
+t4    |0'9      | 6                    | 2                      CPU  | t6(E2)  |  t7(E6)  |  t9(E10)  | t10(E5)  |  t8(E6)  | t2(E2)  |   | t8(E2)  |
+t5    |1'5      | 3                    | 1                           35        37         43          53         58         64        66  69        71
+t6    |30       | 7                    | 0
+t7    |30'5     | 6                    | 1
+t8    |31       | 6cpu/5io/2cpu        | 3                       I/0 |  t2(E10)  |  |t8(E5)  |   
+t9    |32       | 10                   | 2                           30          40 64       69
+t10   |35       | 5                    | 2
+
+5 niveles de cola:
+
+Nivel 0 -> Round Robin con quantum 5
+Nivel 1 -> SJF sin expulsión
+Nivel 2 -> SJF sin expulsión
+Nivel 3 -> SJF sin expulsión
+I/O     -> FIFO
+Acenso cada 10 segundos
+
+        N0    |      N1       |        N2     |         N3      |        I/O                 T Espera                                           | T Respuesta
+0       t1    |               |               |                 |                            Te1=5                                              | Tr1= 11
+0,1     t1    |               |               |         t2      |                            Te2=(27-0.1)+(64-30) = 60,9                        | Tr2= 66-0,1= 65,9
+0,7    t3/t1  |               |      t4       |         t2      |                            Te3=(5-0.7)+(11-10) = 5,3                          | Tr3= 18-0,7= 17,3
+0,9    t3/t1  |      t5       |      t4       |         t2      |                            Te4=(21-0,9)= 20,1                                 | Tr4= 27-0,9= 26,1
+1,5    t3/t1  |      t5       |      t4       |         t2      |                            Te5=(18-1,5)= 16,5                                 | Tr5= 21-1,5= 19,5
+5      t1/t3  |      t5       |      t4       |         t2      |                            Te6=0                                              | Tr6= 35-30 = 5
+10     t3/t1  |      t5       |      t4       |         t2      |                            Te7=(37-30,5)= 6,5                                 | Tr7= 43-30,5 = 12,5
+11      t3    |     t4/t5     |      t2       |                 |                            Te8=(58-31)+(69-64)Cola CPU= 32                    | Tr8= 71-31 = 40
+18      t5    |      t4       |      t2       |                 |                            Te9=(43-32)= 11                                    | Tr9= 53-32 = 21
+21      t4    |      t2       |               |                 |                            Te10=(53-35)= 18                                   | Tr10= 58-35 = 23
+27            |      t2       |               |                 |       t2                   Total = 5+60,9+5,3+20,1+16,5+0+6,5+32+11+18 = 156,8| Total = 65,9+66+17,3+26,1+19,5+5+12,5+40+21+23 = 246,8
+30      t6    |               |               |                 |       t2                   TeMedio = 156,8/10 = 15,68                         | TrMedio = 11 + 65,9 + 17,3 + 26,1 + 19,5 + 5 + 12,5 + 40 + 21 + 23 / 10 = 24,68
+30,5    t6    |      t7       |               |                 |       t2                   TeI/0(t2)=30-30=0                                  | TrI/0(t2)= 40-30 = 10
+31      t6    |      t7       |               |         t8      |       t2                   TeI/0(t8)=64-64=0                                  | TrI/0(t8)= 69-30 = 39
+32      t6    |      t7       |      t9       |         t8      |       t2                   TeMedioI/O= 0                                      | TrMedioI/O= 10+39/2= 24,5
+35      t6    |      t7       |    t9/t10     |         t8      |       t2
+37            |      t7       |    t9/t10     |         t8      |       t2
+40            |      t7       |    t9/t10     |        t8/t2    |       
+43            |      t9       |    t8/t10     |         t2      |
+53            |      t8/t10   |      t2       |                 |
+58            |      t8       |      t2       |                 |

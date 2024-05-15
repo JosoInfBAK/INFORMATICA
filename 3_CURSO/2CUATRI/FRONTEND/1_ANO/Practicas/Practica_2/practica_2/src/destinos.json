@@ -1,0 +1,71 @@
+ {
+    "results": [
+        {
+            "name": "Madrid",
+            "id": 1,
+            "descripcion": "Capital de España",
+            "imagen": "/Mad-Chiki.jpeg",
+            "descripcionLarga": "Madrid es la capital de España y una ciudad vibrante y cosmopolita con una rica historia y cultura. Con una población de más de 3 millones de habitantes, la ciudad es un centro de negocios, turismo y vida nocturna. Madrid es famosa por su gastronomía, con una gran variedad de platos tradicionales y modernos para todos los gustos. La ciudad cuenta con numerosos museos y galerías de arte, incluyendo el Museo del Prado y el Museo Reina Sofía. Además, Madrid es el hogar del Real Madrid, uno de los equipos de fútbol más exitosos del mundo. Con una mezcla de arquitectura histórica y moderna, una amplia variedad de tiendas y una animada vida callejera, Madrid es un destino turístico popular para viajeros de todo el mundo.",
+            "imagenGrande": "/Mad-Grande.jpg",
+            "imagen2":"/Mad-Chiki2.jpeg"
+        },
+        
+        {
+            "name": "Barcelona",
+            "id": 2,
+            "descripcion": "Capital de Cataluña",
+            "imagen": "/Bcn-Chiki.jpg",
+            "descripcionLarga": "Barcelona es una ciudad situada en la costa noreste de España, conocida por su vibrante vida cultural, arquitectura impresionante y playas mediterráneas. Con una población de más de 1,6 millones de habitantes, es la segunda ciudad más grande del país. La ciudad es famosa por las obras de Gaudí, incluyendo la Sagrada Familia, Park Güell y la Casa Batlló, que atraen a millones de turistas cada año. Barcelona también es conocida por su gastronomía, con una gran variedad de platos catalanes y españoles para probar. La ciudad tiene una amplia variedad de tiendas, desde tiendas de lujo hasta mercados al aire libre, y una animada vida nocturna con bares, clubes y restaurantes abiertos hasta tarde",
+            "imagenGrande": "/Bcn-Grande.jpg",
+            "imagen2":"/Bcn-Chiki2.jpg"
+        },
+        {
+            "name": "Valencia",
+            "id": 3,
+            "descripcion": "Capital de la Com. Valenciana",
+            "imagen": "/Vlc-Chiki.jpg",
+            "descripcionLarga": "Valencia es una ciudad situada en la costa este de España, conocida por su clima cálido, playas mediterráneas y su impresionante arquitectura histórica y moderna. Con una población de más de 790.000 habitantes, es la tercera ciudad más grande del país. Valencia es famosa por su gastronomía, con platos como la paella y las horchata, y por sus festividades como Las Fallas y La Tomatina. La ciudad cuenta con impresionantes edificios históricos como la Catedral de Valencia y la Lonja de la Seda, así como modernas obras de arquitectura como la Ciudad de las Artes y las Ciencias.",
+            "imagenGrande": "/Vlc-Grande.jpg",
+            "imagen2":"/Vlc-Chiki2.jpg"
+        },
+        {
+            "name": "Sevilla",
+            "id": 4,
+            "descripcion": "Capital de Andalucía",
+            "imagen": "/Svll-Chiki.jpg",
+            "descripcionLarga": "Sevilla es una ciudad en el sur de España, conocida por su rica historia, arquitectura impresionante y su animada vida callejera. Con una población de más de 690.000 habitantes, es la cuarta ciudad más grande del país. Sevilla es famosa por su patrimonio cultural, incluyendo la catedral de Sevilla y el Alcázar, y por sus festividades como la Feria de Abril y la Semana Santa. La ciudad también es conocida por su gastronomía, con platos como el gazpacho y las tapas. Sevilla tiene una animada vida nocturna y una amplia variedad de tiendas, desde pequeñas tiendas de artesanía hasta grandes centros comerciales.",
+            "imagenGrande": "/Svll-Grande.jpg",
+            "imagen2":"/Svll-Chiki2.jpg"
+        },
+        {
+            "name": "Zaragoza",
+            "id": 5,
+            "descripcion": "Capital de Aragón",
+            "imagen": "/Zrg-Chiki.jpg",
+            "descripcionLarga": "Zaragoza es una ciudad situada en el noreste de España, conocida por su impresionante arquitectura, su rica historia y su animada vida cultural. Con una población de más de 660.000 habitantes, es la quinta ciudad más grande del país. Zaragoza es famosa por su patrimonio cultural, incluyendo la Basílica del Pilar y el Palacio de la Aljafería, y por su gastronomía, con platos como el ternasco y la borraja. La ciudad cuenta con una animada vida nocturna y una amplia variedad de tiendas y restaurantes, desde pequeñas tiendas de artesanía hasta grandes centros comerciales.",
+            "imagenGrande": "/Zrg-Grande.jpg",
+            "imagen2":"/Zrg-Chiki2.jpg"
+        },
+        {
+            "name": "Málaga",
+            "id": 6,
+            "descripcion": "Capital de la Costa del Sol",
+            "imagen": "/Mlg-Chiki.jpg",
+            "descripcionLarga": "Málaga es una ciudad situada en la costa sur de España, conocida por sus hermosas playas, su clima cálido y su rica historia y cultura. Con una población de más de 570.000 habitantes, es la sexta ciudad más grande del país. Málaga es famosa por su gastronomía, con platos como el pescaíto frito y el espeto de sardinas, y por sus festividades como la Feria de Agosto y la Semana Santa. La ciudad cuenta con una amplia variedad de tiendas, desde pequeñas tiendas de artesanía hasta grandes centros comerciales, y una animada vida nocturna con bares y clubes que permanecen abiertos hasta altas horas de la noche.",
+            "imagenGrande": "/Mlg-Grande.jpg",
+            "imagen2":"/Mlg-Chiki2.jpg"
+        },
+        {
+            "name": "Murcia",
+            "id": 7,
+            "descripcion": "Capital de la Región de Murcia",
+            "imagen": "/Mrc-Chiki.jpg",
+            "descripcionLarga": "Murcia es una ciudad situada en el sureste de España, conocida por su clima cálido, su gastronomía y su rica historia. Con una población de más de 450.000 habitantes, es la séptima ciudad más grande del país. Murcia es famosa por su gastronomía, con platos como el zarangollo y el pastel de carne, y por sus festividades como la Semana Santa y el Bando de la Huerta. La ciudad cuenta con una amplia variedad de tiendas, desde pequeñas tiendas de artesanía hasta grandes centros comerciales, y una animada vida nocturna con bares y restaurantes que permanecen abiertos hasta altas horas de la noche.",
+            "imagenGrande": "/Mrc-Grande.webp",
+            "imagen2":"/Mrc-Chiki2.jpg"
+        }
+
+    ]
+
+}
+
